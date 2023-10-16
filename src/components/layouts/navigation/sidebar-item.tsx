@@ -7,7 +7,12 @@ import { useRouter } from 'next/router';
 const SidebarItem = ({ href, icon, label,classtext }: any) => {
   const { closeSidebar } = useUI();  
   const router = useRouter()
-  const active = router.pathname === href || router.pathname.startsWith(`${href}/`)
+  const active = router.pathname === href || router.pathname.startsWith(`/${href}`)
+
+  // const active2 = router.pathname.split('/')[2] === href.split('/')[2]
+  // const active2 = window.location.pathname  === href
+
+
 
 
   return (

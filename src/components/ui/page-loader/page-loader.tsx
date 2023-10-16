@@ -11,9 +11,12 @@ const PageLoader = () => {
       )}
     >
       <div className="flex relative">
-        <div className={styles.page_loader}></div>
+        {/* <div className={styles.page_loader}></div> */}
+        <div className=''>
+            <img src='/icons/340.gif' className=''  alt='loading' />
+          </div>
         <h3 className="text-sm font-semibold text-body italic absolute top-1/2 -mt-2 w-full text-center">
-          {t('text-loading')}
+          {/* {t('text-loading')} */}
         </h3>
       </div>
     </div>
