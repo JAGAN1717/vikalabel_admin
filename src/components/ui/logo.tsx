@@ -23,7 +23,8 @@ const Logo: React.FC<React.AnchorHTMLAttributes<{}>> = ({
         }}
       >
         <Image
-          src={logo?.original ?? siteSettings.logo.url}
+          // src={logo?.original ?? siteSettings.logo.url}
+          src={'/icons/Logo.png'}
           alt={siteTitle ?? siteSettings.logo.alt}
           fill
           onError={(e) => e.currentTarget.src="/icons/Logo.png"}
