@@ -838,7 +838,8 @@ input[type='number'].number-disable::-webkit-inner-spin-button {
 } */
 
 .sideBar_active{
-  background: #2eb097 !important;
+  /* background: #2eb097 !important; */
+  background: #1a3225 !important;
    padding-right: 0px !important;
    color: white !important;
 }
@@ -849,4 +850,16 @@ input[type='number'].number-disable::-webkit-inner-spin-button {
 
 .sideAddnav {
   width: 93px !important;
+}
+
+.log_bgadd {
+  background: url('/image/log_bg.jpg');
+  background-size: cover;
+  background-position:center ;
+  background-repeat: no-repeat;
+}
+
+::selection{
+  background-color: #1a3225;
+  color: #fff;
 }

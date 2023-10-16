@@ -65,15 +65,6 @@ const PasswordInput = React.forwardRef<HTMLInputElement, Props>(
           >
             {label}
           </label>
-
-          {forgotPageLink && forgotPassHelpText && (
-            <Link
-              href={forgotPageLink}
-              className="text-xs text-accent transition-colors duration-200 hover:text-accent-hover focus:font-semibold focus:text-accent-700 focus:outline-none"
-            >
-              {forgotPassHelpText}
-            </Link>
-          )}
         </div>
         <div className="relative">
           <input
@@ -99,6 +90,16 @@ const PasswordInput = React.forwardRef<HTMLInputElement, Props>(
               <Eye className="h-5 w-5" />
             )}
           </label>
+        </div>
+        <div className=''>
+        {forgotPageLink && forgotPassHelpText && (
+            <Link
+              href={forgotPageLink}
+              className="text-xs text-accent transition-colors duration-200 hover:text-accent-hover focus:font-semibold focus:text-accent-700 focus:outline-none"
+            >
+              {forgotPassHelpText}
+            </Link>
+          )}
         </div>
         {error && (
           <p className="text-start my-2 text-xs text-red-500">{error}</p>

@@ -26,6 +26,7 @@ const Logo: React.FC<React.AnchorHTMLAttributes<{}>> = ({
           src={logo?.original ?? siteSettings.logo.url}
           alt={siteTitle ?? siteSettings.logo.alt}
           fill
+          onError={(e) => e.currentTarget.src="/icons/Logo.png"}
           sizes="(max-width: 768px) 100vw"
           className="object-contain"
           loading="eager"

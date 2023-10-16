@@ -20,6 +20,7 @@ import type { NextPageWithLayout } from '@/types';
 import { useRouter } from 'next/router';
 import PrivateRoute from '@/utils/private-route';
 import { Config } from '@/config';
+import { ArrowUp } from '@/components/icons/arrow-up';
 
 
 const Noop: React.FC<{ children?: React.ReactNode }> = ({ children }) => (
@@ -117,10 +118,14 @@ const CustomApp = ({ Component, pageProps }: AppPropsWithLayout) => {
           {/* <ReactQueryDevtools /> */}
         </Hydrate>
       </QueryClientProvider>
-          <button onClick={()=>topFunction()} id="myBtn" className='fixed bg-accent rounded-full  bottom-3 right-0 h-12 p-5 w-12 ' title="Go to top">
+      {
+        window.location.pathname  != '/login' && 
+          <button onClick={()=>topFunction()} id="myBtn" className='fixed bg-accent rounded-full hidden bottom-3 right-0 h-12 p-5 w-12 ' title="Go to top">
           {/* <i className="fa fa-angle-double-up" aria-hidden="true"></i> */}
-          <img src='/image/up-arrows.png' className='' />
+          {/* <img src='/image/up-arrows.png' className='' /> */}
+          <ArrowUp className="text-light" />
           </button>
+      }
     </div>
   );
 };

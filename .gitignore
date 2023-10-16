@@ -43,3 +43,5 @@ __generated__
 # PWA
 workbox-*.js
 sw.js
+
+.vercel

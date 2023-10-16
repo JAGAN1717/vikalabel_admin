@@ -40,7 +40,8 @@ const StickerCard = ({
       {indicator === 'up' && (
         <span
           className="mb-12 inline-block text-sm font-semibold text-body"
-          style={{ color: '#03D3B5' }}
+          // style={{ color: '#03D3B5' }}
+          style={{ color: '#1a3225' }}
         >
           <IosArrowUp width="9px" height="11px" className="inline-block" />{' '}
           {indicatorText}
