@@ -8,11 +8,7 @@ const SidebarItem = ({ href, icon, label,classtext }: any) => {
   const { closeSidebar } = useUI();  
   const router = useRouter()
   const active =  window.location.pathname === href || router.pathname.startsWith(`/${href}`)
-
-  // const active2 = router.pathname.split('/')[2] === href.split('/')[2]
-  // const active2 = window.location.pathname  === href
-
-
+  // const active =  window.location.pathname === href || window.location.pathname.startsWith(`${href}`)
 
 
   return (

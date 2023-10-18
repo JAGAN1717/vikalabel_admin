@@ -120,7 +120,7 @@ const CustomApp = ({ Component, pageProps }: AppPropsWithLayout) => {
       </QueryClientProvider>
       {
         window.location.pathname  != '/login' && 
-          <button onClick={()=>topFunction()} id="myBtn" className='fixed bg-accent rounded-full hidden bottom-3 right-0 h-12 p-5 w-12 ' title="Go to top">
+          <button onClick={()=>topFunction()} id="myBtn" className='flex justify-content align-items-center fixed bg-accent rounded-full hidden bottom-3 right-0 h-12 p-5 w-12 ' title="Go to top">
           {/* <i className="fa fa-angle-double-up" aria-hidden="true"></i> */}
           {/* <img src='/image/up-arrows.png' className='' /> */}
           <ArrowUp className="text-light" />

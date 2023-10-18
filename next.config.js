@@ -12,6 +12,7 @@ module.exports = withPWA({
   i18n,
   images: {
     domains: [
+      'vl.vrikshatech.in',
       'via.placeholder.com',
       'res.cloudinary.com',
       's3.amazonaws.com',
@@ -24,7 +25,7 @@ module.exports = withPWA({
       'lh3.googleusercontent.com',
       '192.168.1.10'
     ],
-    // domains: ['192.168.1.9']
+    // domains: ['vl.vrikshatech.in']
   },
   ...(process.env.APPLICATION_MODE === 'production' && {
     typescript: {
