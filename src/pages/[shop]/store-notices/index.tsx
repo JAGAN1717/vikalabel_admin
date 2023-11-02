@@ -35,7 +35,7 @@ export default function StoreNotices() {
     query: { shop },
   } = useRouter();
   const { data: shopData } = useShopQuery({ slug: shop as string });
-  const shopId = shopData?.id!;
+  const shopId = shopData?.id! ?? 3;
   const { storeNotices, paginatorInfo, loading, error } = useStoreNoticesQuery({
     limit: 15,
     shop_id: shopId,

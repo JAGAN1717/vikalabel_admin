@@ -7,7 +7,7 @@ export default function AuthPageLayout({
 }: React.PropsWithChildren<{}>) {
   // const { locale } = useRouter();
   // const dir = locale === 'ar' || locale === 'he' ? 'rtl' : 'ltr';
-
+  
   return (
     <div
       className="flex h-screen items-center justify-center bg-light sm:bg-gray-100 log_bgadd"

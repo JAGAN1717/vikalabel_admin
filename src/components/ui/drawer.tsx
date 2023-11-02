@@ -78,7 +78,7 @@ const Drawer: FC<SidebarProps> = ({
                     : 'ltr:left-0 rtl:right-auto'
                 )}
               >
-                <div className="h-full w-screen max-w-md">
+                <div className="h-full w-screen max-w-xs">
                   <div className="flex h-full flex-col bg-light text-body shadow-xl">
                     {children}
                   </div>

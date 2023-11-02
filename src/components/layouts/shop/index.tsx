@@ -75,7 +75,7 @@ const ShopLayout: React.FC<{ children?: React.ReactNode }> = ({ children }) => {
       <div className="flex flex-1 pt-20">
         <div>
         {/* <aside className="xl:w-76 fixed bottom-0 hidden h-full w-72 overflow-y-auto bg-white px-4 pt-22 shadow ltr:left-0 ltr:right-auto rtl:right-0 rtl:left-auto lg:block "> */}
-        <aside id='sideAddnavbar' className="xl:w-76 bottom-0 hidden h-full w-72 overflow-y-auto bg-white shadow ltr:left-0 ltr:right-auto rtl:right-0 rtl:left-auto lg:block asside_menu">
+        <aside id='sideAddnavbar' className="xl:w-76 bottom-0 hidden h-full w-64 overflow-y-auto bg-white shadow ltr:left-0 ltr:right-auto rtl:right-0 rtl:left-auto lg:block asside_menu">
           <div className="flex flex-col  space-y-6 py-3">
            {classtext ? <a onClick={()=> handleSildebar2()} className='flex justify-center'><ArrowNext/></a> : <a onClick={()=> handleSildebar()} className='flex justify-end pe-5 cursor-pointer'><ArrowPrev/></a> } 
             <SidebarItemMap />
@@ -85,7 +85,7 @@ const ShopLayout: React.FC<{ children?: React.ReactNode }> = ({ children }) => {
 
         {/* <main className="ltr:xl:pl-76 rtl:xl:pr-76 w-full ltr:lg:pl-72 rtl:lg:pr-72 rtl:lg:pl-0"> */}
         <main className="w-full">
-          <div className="h-full p-5 md:p-8">{children}</div>
+          <div className="h-full p-5 md:p-8"><div className="h-full p-5 md:p-8 bg-light shadow">{children}</div></div>
         </main>
       </div>
 

@@ -14,7 +14,7 @@ const SidebarItem = ({ href, icon, label,classtext }: any) => {
   return (
     <Link
       href={href}
-      className={`text-start p-3 flex w-full items-center text-base hover:text-accent ${classtext && 'lg:justify-center'} focus:text-accent ${active && 'sideBar_active'}`}
+      className={`text-start p-3 flex w-full items-center sidebar-margin text-base hover:text-accent ${classtext && 'lg:justify-center'} focus:text-accent ${active && 'sideBar_active'}`}
     >
       {getIcon({
         iconList: sidebarIcons,

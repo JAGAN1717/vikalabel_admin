@@ -156,7 +156,7 @@ export default function CreateOrUpdateManufacturerForm({
     },
     { enabled: !!router.query.shop }
   );
-  const shopId = shopData?.id!;
+  const shopId = shopData?.id! ?? 3;
   const isNewTranslation = router?.query?.action === 'translate';
   const { locale } = router;
 

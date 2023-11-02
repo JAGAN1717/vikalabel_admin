@@ -500,6 +500,7 @@ export interface StoreNoticeUserToNotifyInput {
 }
 
 export interface Order {
+  [x: string]: any;
   id: string;
   tracking_number: string;
   customer_contact: string;

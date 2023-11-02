@@ -1,5 +1,6 @@
 export const Routes = {
   dashboard: '/',
+  policy:'/policy',
   login: '/login',
   logout: '/logout',
   register: '/register',

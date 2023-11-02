@@ -120,10 +120,10 @@ export const useResendVerificationEmail = () => {
   const { t } = useTranslation('common');
   return useMutation(userClient.resendVerificationEmail, {
     onSuccess: () => {
-      toast.success(t('common:PICKBAZAR_MESSAGE.EMAIL_SENT_SUCCESSFUL'));
+      toast.success(t('common:VIKALABEL_MESSAGE.EMAIL_SENT_SUCCESSFUL'));
     },
     onError: () => {
-      toast(t('common:PICKBAZAR_MESSAGE.EMAIL_SENT_FAILED'));
+      toast(t('common:VIKALABEL_MESSAGE.EMAIL_SENT_FAILED'));
     }
   });
 }

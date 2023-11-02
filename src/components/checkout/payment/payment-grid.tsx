@@ -38,6 +38,9 @@ const AVAILABLE_PAYMENT_METHODS_MAP: Record<
 const PaymentGrid: React.FC<{ className?: string }> = ({ className }) => {
   const [gateway, setGateway] = useAtom<PaymentMethodName>(paymentGatewayAtom);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
+
+  console.log("paymentGatewayAtom",gateway)
+
   const { t } = useTranslation('common');
   const PaymentMethod = AVAILABLE_PAYMENT_METHODS_MAP[gateway];
   const Component = PaymentMethod?.component ?? CashOnDelivery;

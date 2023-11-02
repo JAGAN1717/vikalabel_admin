@@ -50,6 +50,7 @@ import {
 import { EMAIL_GROUP_OPTION, SMS_GROUP_OPTION } from './eventsOption';
 import OpenAIButton from '../openAI/openAI.button';
 import { useModalAction } from '../ui/modal/modal.context';
+import { HttpClient } from '@/data/client/http-client';
 
 export const chatbotAutoSuggestion = ({ name }: { name: string }) => {
   return [
@@ -141,9 +142,18 @@ export const chatbotAutoSuggestion1 = ({ name }: { name: string }) => {
   ];
 };
 
+
+// type FormValues2 = {
+//   siteSubtitle: string;
+//   counter_title:string;
+// }
+
 type FormValues = {
   siteTitle: string;
   siteSubtitle: string;
+  counter_title: string;
+  counter_icon: any;
+  counter_name: string;
   currency: any;
   currencyOptions?: SettingCurrencyOptions;
   minimumOrderAmount: number;
@@ -255,6 +265,9 @@ export default function SettingsForm({
     useUpdateSettingsMutation();
   const { language, options } = settings ?? {};
   const [serverInfo, SetSeverInfo] = useState(options?.server_info);
+  const [BackgroudImg, setBackgroudImg] = useState<any>()
+
+  console.log("skjdhsd", BackgroudImg)
 
   const {
     register,
@@ -336,6 +349,7 @@ export default function SettingsForm({
         : null,
     },
   });
+
   const { openModal } = useModalAction();
 
   const generateName = watch('siteTitle');
@@ -388,6 +402,35 @@ export default function SettingsForm({
   const isNotDefaultSettingsPage = Config.defaultLanguage !== locale;
 
   async function onSubmit(values: FormValues) {
+    let imagPath = ''
+    const url = values.counter_icon?.original;
+    const parts = url.split('/public/'); // Split the URL by '/public/'
+    if (parts.length === 2) {
+      imagPath = '/' + parts[1];
+    } else {
+      console.log('URL format not as expected');
+    }
+
+    // const imagPath = `/${values.counter_icon?.id}/${values.counter_icon?.file_name}`
+    const body = {
+      icon: imagPath ?? values.counter_icon?.original,
+      title: values.counter_title,
+      counter_name: values.counter_name?.value
+    }
+
+    //     let formdata = new FormData()
+    //     formdata.append('icon',BackgroudImg)
+    //     formdata.append('title',values.counter_title)
+    //     formdata.append('counter_name',values.counter_name?.value)
+
+    // console.log('sddsdd', values.counter_icon)
+
+
+    HttpClient.post('/counterup-update', body).then(res => {
+      console.log('success', res)
+    }).catch(err => console.log("err", err.message))
+
+
     const contactDetails = {
       ...values?.contactDetails,
       location: { ...omit(values?.contactDetails?.location, '__typename') },
@@ -760,6 +803,43 @@ export default function SettingsForm({
           )}
         </Card>
       </div>
+
+      <div className="my-5 flex flex-wrap border-b border-dashed border-border-base pb-8 sm:my-8">
+        <Description
+          title="Counter List"
+          details={t('Change your Footer Counter from here')}
+          className="w-full px-0 pb-5 sm:w-4/12 sm:py-8 sm:pr-4 md:w-1/3 md:pr-5"
+        />
+
+        <Card className="w-full sm:w-8/12 md:w-2/3">
+          <div className="mb-5">
+            <FileInput name="counter_icon" control={control} multiple={false} />
+            {/* <input type='file' className='' onChange={(e)=> setBackgroudImg(e.target.files[0])} /> */}
+          </div>
+          <div className="mb-5">
+            <Label>{`${t('Counter Name')} *`}</Label>
+            <SelectInput
+              {...register('counter_name')}
+              control={control}
+              getOptionLabel={(option: any) => option.value}
+              // getOptionValue={(option: any) => option.name}
+              options={[{ value: 'counter_1' }, { value: 'counter_2' }, { value: 'counter_3' }, { value: 'counter_4' }]}
+              disabled={isNotDefaultSettingsPage}
+            />
+          </div>
+
+          <Input
+            label={`${t('Title')} *`}
+            {...register('counter_title')}
+            type="text"
+            variant="outline"
+            placeholder={t('Title')}
+            error={t(errors.counter_title?.message!)}
+            className="mb-5"
+          />
+        </Card>
+      </div>
+
       <div className="my-5 flex flex-wrap border-b border-dashed border-border-base pb-8 sm:my-8">
         <Description
           title="Currency Options"
@@ -797,7 +877,7 @@ export default function SettingsForm({
                     amount: 987456321.123456789,
                     currencyCode:
                       currentCurrency?.code ?? settings?.options?.currency!,
-                      // @ts-ignore
+                    // @ts-ignore
                     locale: formation?.code! as string,
                     fractions: currentFractions,
                   })}
@@ -808,6 +888,7 @@ export default function SettingsForm({
           )}
         </Card>
       </div>
+
       <div className="my-5 flex flex-wrap border-b border-dashed border-border-base pb-8 sm:my-8">
         <Description
           title="SEO"
@@ -891,6 +972,7 @@ export default function SettingsForm({
           />
         </Card>
       </div>
+
       <div className="my-5 flex flex-wrap border-b border-dashed border-border-base pb-8 sm:my-8">
         <Description
           title={t('form:title-sms-event-settings')}
@@ -950,7 +1032,8 @@ export default function SettingsForm({
                 }
               }}
               isCloseMenuOnSelect={false}
-              options={EMAIL_GROUP_OPTION}
+              options={EMAIL_GROUP_OPTION} npm run dev
+
               isMulti
               disabled={isNotDefaultSettingsPage}
             />
@@ -1030,8 +1113,9 @@ export default function SettingsForm({
 
       <div className="my-5 flex flex-wrap border-b border-dashed border-gray-300 pb-8 sm:my-8">
         <Description
-          title={t('form:shop-settings')}
-          details={t('form:shop-settings-helper-text')}
+          // title={t('form:shop-settings')}
+          title={t('Vikalabel Settings')}
+          details={t('Add vikalabel settings information from here')}
           className="w-full px-0 pb-5 sm:w-4/12 sm:py-8 sm:pe-4 md:w-1/3 md:pe-5"
         />
 
@@ -1059,15 +1143,17 @@ export default function SettingsForm({
             disabled={isNotDefaultSettingsPage}
           />
           <Input
-            label={t('form:input-label-website')}
+            // label={t('form:input-label-website')}
+            label={t('Mail')}
             {...register('contactDetails.website')}
             variant="outline"
+            type="email"
             className="mb-5"
             error={t(errors.contactDetails?.website?.message!)}
             disabled={isNotDefaultSettingsPage}
           />
 
-          <div className="mt-6">
+          <div className="mt-6 hidden">
             <div className="flex items-center gap-x-4">
               <SwitchInput
                 name="useGoogleMap"
@@ -1086,11 +1172,11 @@ export default function SettingsForm({
             type="number"
             error={t(errors.maxShopDistance?.message!)}
             variant="outline"
-            className="my-5"
+            className="my-5 hidden"
             disabled={isNotDefaultSettingsPage}
           />
 
-          <div className="mt-6 mb-5">
+          <div className="mt-6 mb-5 hidden">
             <div className="flex items-center gap-x-4">
               <SwitchInput
                 name="isProductReview"
@@ -1153,7 +1239,7 @@ export default function SettingsForm({
             )}
           </div>
 
-          {!isNotDefaultSettingsPage && (
+          {/* {!isNotDefaultSettingsPage && (
             <Button
               type="button"
               onClick={() => socialAppend({ icon: '', url: '' })}
@@ -1162,9 +1248,28 @@ export default function SettingsForm({
             >
               {t('form:button-label-add-social')}
             </Button>
-          )}
+          )} */}
         </Card>
       </div>
+
+      {/* 
+      <div className="my-5 flex flex-wrap border-b border-dashed border-border-base pb-8 sm:my-8">
+        <Description
+          title="Banners"
+          details={t('Add admin settings information from here')}
+          className="w-full px-0 pb-5 sm:w-4/12 sm:py-8 sm:pr-4 md:w-1/3 md:pr-5"
+        />
+
+        <Card className="w-full sm:w-8/12 md:w-2/3">
+        <FileInput name="NewBanner"  control={control} multiple={false}  />
+        <div className="mt-4 text-end">
+        <Button type='button'>
+          {t('Save Banners')}
+        </Button>
+        </div>
+        </Card>
+
+      </div> */}
 
       <div className="mb-4 text-end">
         <Button loading={loading} disabled={loading}>

@@ -130,7 +130,7 @@ export default function CreateOrUpdateProductForm({
       enabled: !!router.query.shop,
     }
   );
-  const shopId = shopData?.id!;
+  const shopId = shopData?.id! ?? 3;
   const isNewTranslation = router?.query?.action === 'translate';
   const isSlugEditable =
     router?.query?.action === 'edit' &&
@@ -415,7 +415,7 @@ export default function CreateOrUpdateProductForm({
               />
               <ProductCategoryInput control={control} setValue={setValue} />
               {/* <ProductAuthorInput control={control} /> */}
-              <ProductManufacturerInput control={control} setValue={setValue} />
+              {/* <ProductManufacturerInput control={control} setValue={setValue} /> */}
               <ProductTagInput control={control} setValue={setValue} />
             </Card>
           </div>

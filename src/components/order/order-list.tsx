@@ -10,7 +10,7 @@ import timezone from 'dayjs/plugin/timezone';
 import { SortOrder, UserAddress } from '@/types';
 import { useTranslation } from 'next-i18next';
 import { useIsRTL } from '@/utils/locals';
-import { useState } from 'react';
+import { useState,useEffect } from 'react';
 import TitleWithSort from '@/components/ui/title-with-sort';
 import { Order, MappedPaginatorInfo } from '@/types';
 import { useRouter } from 'next/router';
@@ -41,7 +41,8 @@ const OrderList = ({
   // const { data, paginatorInfo } = orders! ?? {};
   const router = useRouter();
   const { t } = useTranslation();
-  const rowExpandable = (record: any) => record.children?.length;
+  // const rowExpandable = (record: any) => record.children?.length;
+  const rowExpandable = (record: any) => null;
   const { alignLeft } = useIsRTL();
   const { permissions } = getAuthCredentials();
   const { mutate: createConversations, isLoading: creating } =
@@ -78,6 +79,53 @@ const OrderList = ({
       });
     },
   });
+
+  const [Orderlists, setOrderlists] = useState<string[]>([]);
+
+  // const handleRowExpand = (expanded: boolean, record: any) => {
+  //   if (expanded) {
+  //     setExpandedRowKeys((prevKeys) => [...prevKeys, record.key]);
+  //   } else {
+  //     setExpandedRowKeys((prevKeys) => prevKeys.filter((key) => key !== record.key));
+  //   }
+  // };
+
+  // console.log('ordersorders',orders)
+
+  function renameField(obj:any, currentField:any, newField:any) {
+    for (const key in obj) {
+      if (obj.hasOwnProperty(key)) {
+        if (typeof obj[key] === 'object') {
+          // If the current property is an object, recursively call the function
+          obj[key] = renameField(obj[key], currentField, newField);
+        }
+        if (key === currentField) {
+          // If the current property key matches the field you want to rename
+          // Replace the key with the new field name
+          obj[newField] = obj[key];
+          delete obj[key];
+        }
+      }
+    }
+    return obj;
+  }
+
+  const handleChangeOrd = () => {
+    let data: any[] = []
+    orders?.map((val,i)=>{
+      if(val?.children){
+       const glob = renameField(val,'children','children')
+        data.push(glob)
+      }
+    })
+    setOrderlists(data)
+  // console.log("jkhsgddddddddd",data)
+  }
+
+  // useEffect(()=> {
+  //   handleChangeOrd()
+  // },[orders])
+
 
   const columns = [
     {
@@ -183,7 +231,7 @@ const OrderList = ({
               ''
             ) : (
               <>
-                {permissions?.includes(SUPER_ADMIN) && order?.shop_id ? (
+                {/* {permissions?.includes(SUPER_ADMIN) && order?.shop_id ? (
                   <button
                     onClick={() => onSubmit(order?.shop_id)}
                     disabled={currentButtonLoading}
@@ -193,7 +241,7 @@ const OrderList = ({
                   </button>
                 ) : (
                   ''
-                )}
+                )} */}
               </>
             )}
             <ActionButtons
@@ -205,11 +253,13 @@ const OrderList = ({
         );
       },
     },
-  ];
+  ]; 
+  
+   
 
   return (
     <>
-      <div className="mb-6 overflow-hidden rounded shadow">
+      <div className="mb-6 overflow-hidden rounded ">
         <Table
           //@ts-ignore
           columns={columns}
@@ -218,7 +268,7 @@ const OrderList = ({
           rowKey="id"
           scroll={{ x: 1000 }}
           expandable={{
-            expandedRowRender: () => '',
+            expandedRowRender: () =>  null,
             rowExpandable: rowExpandable,
           }}
         />

@@ -34,7 +34,7 @@ export default function WithdrawsPage() {
   const { data: shopData } = useShopQuery({
     slug: shop as string,
   });
-  const shopId = shopData?.id!;
+  const shopId = shopData?.id! ?? 3;
 
   const { withdraws, paginatorInfo, loading, error } = useWithdrawsQuery(
     {

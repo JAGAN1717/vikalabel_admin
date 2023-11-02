@@ -100,7 +100,7 @@ const PopularProductList = ({ products, title }: IProps) => {
   }
 
   return (
-    <div className="mb-6 overflow-hidden rounded shadow">
+    <div className="mb-6 overflow-hidden rounded ">
       <h3 className="border-b border-border-200 bg-light px-4 py-3 text-center font-semibold text-heading">
         {title}
       </h3>

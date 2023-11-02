@@ -93,7 +93,7 @@ const StaffList = ({
 
   return (
     <>
-      <div className="mb-6 overflow-hidden rounded shadow">
+      <div className="mb-6 overflow-hidden rounded ">
         <Table
           // @ts-ignore
           columns={columns}

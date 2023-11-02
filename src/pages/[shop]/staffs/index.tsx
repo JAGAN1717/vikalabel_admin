@@ -36,7 +36,7 @@ export default function StaffsPage() {
     slug: shop as string,
   });
 
-  const shopId = shopData?.id!;
+  const shopId = shopData?.id! ?? 3;
   const {
     staffs,
     paginatorInfo,

@@ -56,6 +56,7 @@ const CustomApp = ({ Component, pageProps }: AppPropsWithLayout) => {
   
   window.onscroll = function() {scrollFunction()};
   
+  
   let mybutton = document.getElementById("myBtn");
   
   function scrollFunction() {

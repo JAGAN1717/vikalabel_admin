@@ -25,8 +25,14 @@ import { Config } from '@/config';
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import { join, split } from 'lodash';
 import { formatSlug } from '@/utils/use-slug';
+import { HttpClient } from '@/data/client/http-client';
 
-export const updatedIcons = typeIconList.map((item: any) => {
+
+export const updatedIcons = typeIconList.map((item: any) => { 
+
+
+
+
   item.label = (
     <div className="flex items-center space-s-5">
       <span className="flex h-5 w-5 items-center justify-center">
@@ -48,58 +54,58 @@ const layoutTypes = [
     value: 'classic',
     img: '/image/layout-classic.png',
   },
-  {
-    label: 'Compact',
-    value: 'compact',
-    img: '/image/layout-compact.png',
-  },
-  {
-    label: 'Minimal',
-    value: 'minimal',
-    img: '/image/layout-minimal.png',
-  },
-  {
-    label: 'Modern',
-    value: 'modern',
-    img: '/image/layout-modern.png',
-  },
-  {
-    label: 'Standard',
-    value: 'standard',
-    img: '/image/layout-standard.png',
-  },
+  // {
+  //   label: 'Compact',
+  //   value: 'compact',
+  //   img: '/image/layout-compact.png',
+  // },
+  // {
+  //   label: 'Minimal',
+  //   value: 'minimal',
+  //   img: '/image/layout-minimal.png',
+  // },
+  // {
+  //   label: 'Modern',
+  //   value: 'modern',
+  //   img: '/image/layout-modern.png',
+  // },
+  // {
+  //   label: 'Standard',
+  //   value: 'standard',
+  //   img: '/image/layout-standard.png',
+  // },
 ];
 const productCards = [
-  {
-    label: 'Helium',
-    value: 'helium',
-    img: '/image/card-helium.png',
-  },
-  {
-    label: 'Neon',
-    value: 'neon',
-    img: '/image/card-neon.png',
-  },
-  {
-    label: 'Argon',
-    value: 'argon',
-    img: '/image/card-argon.png',
-  },
-  {
-    label: 'Krypton',
-    value: 'krypton',
-    img: '/image/card-krypton.png',
-  },
+  // {
+  //   label: 'Helium',
+  //   value: 'helium',
+  //   img: '/image/card-helium.png',
+  // },
+  // {
+  //   label: 'Neon',
+  //   value: 'neon',
+  //   img: '/image/card-neon.png',
+  // },
+  // {
+  //   label: 'Argon',
+  //   value: 'argon',
+  //   img: '/image/card-argon.png',
+  // },
+  // {
+  //   label: 'Krypton',
+  //   value: 'krypton',
+  //   img: '/image/card-krypton.png',
+  // },
   {
     label: 'Xenon',
     value: 'xenon',
     img: '/image/card-xenon.png',
   },
-  {
-    label: 'Radon',
-    value: 'radon',
-    img: '/image/card-radon.png',
-  },
+  // {
+  //   label: 'Radon',
+  //   value: 'radon',
+  //   img: '/image/card-radon.png',
+  // },
 ];
 
 type BannerInput = {
@@ -108,6 +114,13 @@ type BannerInput = {
   image: AttachmentInput;
 };
 
+
+type Collections = {
+  title:string;
+  url:string
+};
+
+
 type FormValues = {
   name: string;
   slug?: string | null;
@@ -115,6 +128,12 @@ type FormValues = {
   promotional_sliders: AttachmentInput[];
   banners: BannerInput[];
   settings: TypeSettingsInput;
+
+  banner_image: any;
+  banner_title: string;
+  banner_subtitle: string;
+  images:any;
+  collect:Collections[];
 };
 
 type IProps = {
@@ -123,6 +142,7 @@ type IProps = {
 export default function CreateOrUpdateTypeForm({ initialValues }: IProps) {
   const router = useRouter();
   const { t } = useTranslation();
+  const [colectT,setCollecT]= useState<any>(localStorage.getItem('fileLen') ?? 0)
   const [isSlugDisable, setIsSlugDisable] = useState<boolean>(true);
   const isSlugEditable =
     router?.query?.action === 'edit' &&
@@ -150,8 +170,8 @@ export default function CreateOrUpdateTypeForm({ initialValues }: IProps) {
       },
       icon: initialValues?.icon
         ? typeIconList.find(
-            (singleIcon) => singleIcon.value === initialValues?.icon
-          )
+          (singleIcon) => singleIcon.value === initialValues?.icon
+        )
         : '',
     },
   });
@@ -165,6 +185,43 @@ export default function CreateOrUpdateTypeForm({ initialValues }: IProps) {
   const { mutate: updateType, isLoading: updating } = useUpdateTypeMutation();
   const slugAutoSuggest = formatSlug(watch('name'));
   const onSubmit = (values: FormValues) => {
+    
+    const images: any[] = [];
+    const titles: string[] = [];
+    const urls: string[] = [];
+    values.collect?.map((res,i)=>{
+      // images[i]= res.images,
+      titles[i]= res.title,
+      urls[i]= res.url
+    })
+
+    let imagPath = ''
+    const url = values.banner_image?.original;
+    const parts = url?.split('/public/'); // Split the URL by '/public/'
+    if (parts?.length === 2) {
+      imagPath = '/' + parts[1];
+    } else {
+      console.log('URL format not as expected');
+    }
+
+    const body = {
+      banner_image:imagPath,
+      banner_title:values.banner_title,
+      banner_subtitle:values.banner_subtitle,
+      images:values.images?.map((res: { original: any; }) =>  '/'+res?.original?.split('/public/')[1]),
+      titles:titles,  
+      urls:urls
+    }
+
+
+    // console.log('skdhksgdskds',values.collect)
+    // console.log('etefefefef',body)
+    if(values.images?.length){
+      HttpClient.post('/home-luxe-section',body).then(res => {
+        console.log('succ',res)
+      }).catch(err => console.log('err',err.message))
+    }
+ 
     const input = {
       language: router.locale,
       name: values.name!,
@@ -175,7 +232,7 @@ export default function CreateOrUpdateTypeForm({ initialValues }: IProps) {
         productCard: values?.settings?.productCard,
         layoutType: values?.settings?.layoutType,
       },
-      promotional_sliders: values.promotional_sliders?.map(
+      promotional_sliders: [values.promotional_sliders]?.map(
         ({ thumbnail, original, id }: any) => ({
           thumbnail,
           original,
@@ -207,16 +264,27 @@ export default function CreateOrUpdateTypeForm({ initialValues }: IProps) {
       });
     }
   };
+
+  // console.log('etefefefef',control)
+
+  // useEffect(()=> {
+  //   if(localStorage.getItem('fileLen')){
+  //     setCollecT(JSON.parse(localStorage.getItem('fileLen')))
+  //   }
+  // },[localStorage.getItem('fileLen')])
+  
+// console.log('lll',colectT)
+
+
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
       <div className="my-5 flex flex-wrap sm:my-8">
         <Description
           title={t('form:item-description')}
-          details={`${
-            initialValues
+          details={`${initialValues
               ? t('form:item-description-update')
               : t('form:item-description-add')
-          } ${t('form:type-description-help-text')}`}
+            } ${t('form:type-description-help-text')}`}
           className="w-full px-0 pb-5 sm:w-4/12 sm:py-8 sm:pe-4 md:w-1/3 md:pe-5"
         />
 
@@ -227,7 +295,8 @@ export default function CreateOrUpdateTypeForm({ initialValues }: IProps) {
             error={t(errors.name?.message!)}
             variant="outline"
             className="mb-5"
-            // disabled={[].includes(Config.defaultLanguage)}
+          // disabled={[].includes(Config.defaultLanguage)}
+          disabled={true}
           />
           {isSlugEditable ? (
             <div className="relative mb-5">
@@ -266,6 +335,7 @@ export default function CreateOrUpdateTypeForm({ initialValues }: IProps) {
               options={updatedIcons}
               isClearable={true}
               placeholder="Select Icon"
+              disabled={true}
             />
           </div>
         </Card>
@@ -328,15 +398,86 @@ export default function CreateOrUpdateTypeForm({ initialValues }: IProps) {
       {layoutType === 'classic' ? (
         <div className="my-5 flex flex-wrap border-b border-dashed border-border-base pb-8 sm:my-8">
           <Description
-            title={t('form:promotional-slider')}
-            details={t('form:promotional-slider-help-text')}
+            title={t('Promotional Banner')}
+            details={t('Upload Promotional Banner')}
             className="w-full px-0 pb-5 sm:w-4/12 sm:py-8 sm:pe-4 md:w-1/3 md:pe-5"
           />
           <Card className="w-full sm:w-8/12 md:w-2/3">
-            <FileInput name="promotional_sliders" control={control} />
+            <FileInput name="promotional_sliders" control={control} multiple={false} />
           </Card>
         </div>
       ) : null}
+
+      {layoutType === 'classic' ? (
+        <div className="my-5 flex flex-wrap border-b border-dashed border-border-base pb-8 sm:my-8">
+          <Description
+            title={t('Collections')}
+            details={t('Upload Collections')}
+            className="w-full px-0 pb-5 sm:w-4/12 sm:py-8 sm:pe-4 md:w-1/3 md:pe-5"
+          />
+          <Card className="w-full sm:w-8/12 md:w-2/3">
+            <div className=''>
+            <div className="mb-3 w-full">
+              <Title>{t('Background Image')}</Title>
+              <FileInput name="banner_image" control={control} multiple={false} />
+            </div>
+            <div className="grid grid-cols-2 gap-5">
+              <Input
+                label={t('Main Title')}
+                {...register('banner_title')}
+                error={t(errors.banner_title?.message!)}
+                variant="outline"
+                className="mb-5"
+              // disabled={[].includes(Config.defaultLanguage)}
+              />
+              <Input
+                label={t('Main Subtitle')}
+                {...register('banner_subtitle')}
+                error={t(errors.banner_subtitle?.message!)}
+                variant="outline"
+                className="mb-5"
+              // disabled={[].includes(Config.defaultLanguage)}
+              />
+            </div>
+            </div>
+
+            <div className=''>
+            <div className="mb-3 w-full">
+              <Title>{t('images')}</Title>
+              <FileInput name="images" control={control} multiple={true} />
+            </div>
+            { control?._formValues?.images  ?
+              // [...Array(colectT ?? control?._formValues?.images?.length)].map((x,i)=>(
+                [...Array(control?._formValues?.images?.length)].map((x,i)=>(
+                <div className="grid grid-cols-2 gap-5" key={i}>
+                  <Input
+                    label={t('Title')}
+                    // {...register(`title[${i}]`)}
+                    {...register(`collect.${i}.title` as const)}
+                    // error={t(errors.title?.message!)}
+                    error={t(errors.collect?.[i]?.title?.message!)}
+                    variant="outline"
+                    className="mb-5"
+                  // disabled={[].includes(Config.defaultLanguage)}
+                  />
+                  <Input
+                    label={t('Url')}
+                    // {...register('url')}
+                    {...register(`collect.${i}.url` as const)}
+                    error={t(errors.collect?.[i]?.url?.message!)}
+                    variant="outline"
+                    className="mb-5"
+                  // disabled={[].includes(Config.defaultLanguage)}
+                  />
+                </div>
+              )) : ''
+            }
+            </div>
+          </Card>
+        </div>
+      ) : null}
+
+
 
       <div className="my-5 flex flex-wrap sm:my-8">
         <Description

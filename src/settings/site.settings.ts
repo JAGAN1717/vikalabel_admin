@@ -2,11 +2,11 @@ import { adminAndOwnerOnly, adminOwnerAndStaffOnly } from '@/utils/auth-utils';
 import { Routes } from '@/config/routes';
 
 export const siteSettings = {
-  name: 'PickBazar',
+  name: 'VikaLabel',
   description: '',
   logo: {
     url: '/logo.svg',
-    alt: 'PickBazar',
+    alt: 'VikaLabel',
     href: '/',
     width: 128,
     height: 40,
@@ -14,7 +14,8 @@ export const siteSettings = {
   defaultLanguage: 'en',
   author: {
     name: 'RedQ, Inc.',
-    websiteUrl: 'https://redq.io',
+    // websiteUrl: 'https://redq.io',
+    websiteUrl: '',
     address: '',
   },
   headerLinks: [],
@@ -92,12 +93,12 @@ export const siteSettings = {
         icon: 'TagIcon',
         permissions: adminOwnerAndStaffOnly,
       },
-      {
-        href: Routes.manufacturer.list,
-        label: 'sidebar-nav-item-manufacturers',
-        icon: 'DiaryIcon',
-        permissions: adminOwnerAndStaffOnly,
-      },
+      // {
+      //   href: Routes.manufacturer.list,
+      //   label: 'sidebar-nav-item-manufacturers',
+      //   icon: 'DiaryIcon',
+      //   permissions: adminOwnerAndStaffOnly,
+      // },
       // {
       //   href: Routes.author.list,
       //   label: 'sidebar-nav-item-authors',
@@ -139,40 +140,46 @@ export const siteSettings = {
         icon: 'ShippingsIcon',
         permissions: adminOwnerAndStaffOnly,
       },
-      {
-        href: Routes.withdraw.list,
-        label: 'sidebar-nav-item-withdraws',
-        icon: 'WithdrawIcon',
-        permissions: adminOwnerAndStaffOnly,
-      },
-      {
-        href: Routes.message.list,
-        label: 'sidebar-nav-item-message',
-        icon: 'ChatIcon',
-        permissions: adminOwnerAndStaffOnly,
-      },
+      // {
+      //   href: Routes.withdraw.list,
+      //   label: 'sidebar-nav-item-withdraws',
+      //   icon: 'WithdrawIcon',
+      //   permissions: adminOwnerAndStaffOnly,
+      // },
+      // {
+      //   href: Routes.message.list,
+      //   label: 'sidebar-nav-item-message',
+      //   icon: 'ChatIcon',
+      //   permissions: adminOwnerAndStaffOnly,
+      // },
       {
         href: Routes.refund.list,
         label: 'sidebar-nav-item-refunds',
         icon: 'RefundsIcon',
         permissions: adminOwnerAndStaffOnly,
       },
-      {
-        href: Routes.question.list,
-        label: 'sidebar-nav-item-questions',
-        icon: 'QuestionIcon',
-        permissions: adminOwnerAndStaffOnly,
-      },
-      {
-        href: Routes.storeNotice.list,
-        label: 'sidebar-nav-item-store-notice',
-        icon: 'StoreNoticeIcon',
-        permissions: adminOwnerAndStaffOnly,
-      },
+      // {
+      //   href: Routes.question.list,
+      //   label: 'sidebar-nav-item-questions',
+      //   icon: 'QuestionIcon',
+      //   permissions: adminOwnerAndStaffOnly,
+      // },
+      // {
+      //   href: Routes.storeNotice.list,
+      //   label: 'sidebar-nav-item-store-notice',
+      //   icon: 'StoreNoticeIcon',
+      //   permissions: adminOwnerAndStaffOnly,
+      // },
       {
         href: Routes.reviews.list,
         label: 'sidebar-nav-item-reviews',
         icon: 'ReviewIcon',
+        permissions: adminOwnerAndStaffOnly,
+      },
+      {
+        href: Routes.policy,
+        label: 'Pages',
+        icon: 'FountainPenIcon',
         permissions: adminOwnerAndStaffOnly,
       },
       {
@@ -181,6 +188,7 @@ export const siteSettings = {
         icon: 'SettingsIcon',
         permissions: adminOwnerAndStaffOnly,
       },
+
     ],
     // shop: [
     //   {

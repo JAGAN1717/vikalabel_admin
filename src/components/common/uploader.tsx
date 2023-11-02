@@ -28,6 +28,7 @@ export default function Uploader({
 }: any) {
   const { t } = useTranslation();
   const [files, setFiles] = useState<Attachment[]>(getPreviewImage(value));
+  localStorage.setItem('fileLen',value?.length ?? 0)
   const { mutate: upload, isLoading: loading } = useUploadMutation();
   const [error, setError] = useState<string | null>(null);
   const { getRootProps, getInputProps } = useDropzone({

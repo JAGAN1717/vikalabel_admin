@@ -34,7 +34,7 @@ const OwnerStoreNoticePage = () => {
   const { data: shopData } = useShopQuery({
     slug: query?.shop as string,
   });
-  const shopId = shopData?.id!;
+  const shopId = shopData?.id! ?? 3;
   const {
     storeNotice: data,
     loading,
