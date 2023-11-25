@@ -7,14 +7,14 @@ export const SMS_GROUP_OPTION = [
       { value: 'admin-paymentOrder', label: 'Payment ' },
     ],
   },
-  {
-    label: 'Store Owner',
-    options: [
-      { value: 'vendor-statusChangeOrder', label: 'Status Change Order' },
-      { value: 'vendor-refundOrder', label: 'Refund Order' },
-      { value: 'vendor-paymentOrder', label: 'Payment ' },
-    ],
-  },
+  // {
+  //   label: 'Store Owner',
+  //   options: [
+  //     { value: 'vendor-statusChangeOrder', label: 'Status Change Order' },
+  //     { value: 'vendor-refundOrder', label: 'Refund Order' },
+  //     { value: 'vendor-paymentOrder', label: 'Payment ' },
+  //   ],
+  // },
   {
     label: 'Customer',
     options: [
@@ -22,7 +22,7 @@ export const SMS_GROUP_OPTION = [
       { value: 'customer-statusChangeOrder', label: 'Status Change Order' },
       { value: 'customer-refundOrder', label: 'Refund Order' },
       { value: 'customer-paymentOrder', label: 'Payment ' },
-    ],
+    ],  
   },
 ];
 export const EMAIL_GROUP_OPTION = [
@@ -35,16 +35,16 @@ export const EMAIL_GROUP_OPTION = [
 
     ],
   },
-  {
-    label: 'Store Owner',
-    options: [
-      { value: 'vendor-statusChangeOrder', label: 'Status Change Order' },
-      { value: 'vendor-refundOrder', label: 'Refund Order' },
-      { value: 'vendor-paymentOrder', label: 'Payment ' },
-      { value: 'vendor-createQuestion', label: 'Create Question' },
-      { value: 'vendor-createReview', label: 'Create Review' },
-    ],
-  },
+  // {
+  //   label: 'Store Owner',
+  //   options: [
+  //     { value: 'vendor-statusChangeOrder', label: 'Status Change Order' },
+  //     { value: 'vendor-refundOrder', label: 'Refund Order' },
+  //     { value: 'vendor-paymentOrder', label: 'Payment ' },
+  //     { value: 'vendor-createQuestion', label: 'Create Question' },
+  //     { value: 'vendor-createReview', label: 'Create Review' },
+  //   ],
+  // },
   {
     label: 'Customer',
     options: [

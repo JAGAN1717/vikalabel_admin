@@ -15,6 +15,7 @@ interface SelectInputProps {
   isLoading?: boolean;
   [key: string]: unknown;
   placeholder?: string;
+  disabledOptins?:((arg1:any) => boolean ) | undefined
 }
 
 const SelectInput = ({
@@ -29,6 +30,7 @@ const SelectInput = ({
   isClearable,
   isLoading,
   placeholder,
+  disabledOptins,
   ...rest
 }: SelectInputProps) => {
   return (
@@ -48,6 +50,7 @@ const SelectInput = ({
           isLoading={isLoading}
           options={options}
           isDisabled={disabled as boolean}
+          isOptionDisabled={disabledOptins}
         />
       )}
     />

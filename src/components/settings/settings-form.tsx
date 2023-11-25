@@ -158,6 +158,7 @@ type FormValues = {
   counter_title: string;
   counter_icon: any;
   counter_name: string;
+  working_days:number;
   currency: any;
   currencyOptions?: SettingCurrencyOptions;
   minimumOrderAmount: number;
@@ -235,9 +236,17 @@ const socialIcon = [
   },
 ];
 
+const socialIcon2 = [
+  'FacebookIcon',
+  'InstagramIcon',
+  'TwitterIcon',
+  'YouTubeIcon',
+];
+
+
 export const updatedIcons = socialIcon.map((item: any) => {
   item.label = (
-    <div className="flex items-center text-body space-s-4">
+    <div className="flex items-center text-body space-s-4"  >
       <span className="flex h-4 w-4 items-center justify-center">
         {getIcon({
           iconList: socialIcons,
@@ -412,6 +421,24 @@ export default function SettingsForm({
     control,
     name: 'contactDetails.socials',
   });
+  
+
+      // function arraysAreEqual(arr1:any, arr2:any) {
+      //   // Check if the arrays have the same length
+      //   if (arr1.length !== arr2.length) {
+      //     return false;
+      //   }
+      
+      //   // Check if all elements are the same
+      //   return arr1.every((item:any, index:number) => {
+      //     // You can customize this condition based on your requirements
+      //     return item?.icon?.value == arr2[index] ;
+      //   });
+      // }
+
+
+   
+  // console.log('socialFieldssocialFields',arraysAreEqual(socialFields,socialIcon2))
 
   const isNotDefaultSettingsPage = Config.defaultLanguage !== locale;
 
@@ -620,6 +647,18 @@ export default function SettingsForm({
             disabled={isNotDefaultSettingsPage}
           />
 
+
+          <Input
+            label={`${t('Delivery Duration')}`}
+            {...register('working_days')}
+            type="number"
+            error={t(errors.working_days?.message!)}
+            variant="outline"
+            className="mb-5"
+            // value={control._formValues?.maximumQuestionLimit < 0 ? 1 : control._formValues?.maximumQuestionLimit }
+            disabled={isNotDefaultSettingsPage}
+          />
+
           {/* <div className="mb-5">
             <div className="flex items-center gap-x-4">
               <SwitchInput
@@ -691,7 +730,7 @@ export default function SettingsForm({
               disabled={isNotDefaultSettingsPage}
             />
           </div>
-          {/* <div className="mb-5">
+          <div className="mb-5">
             <div className="flex items-center gap-x-4">
               <SwitchInput
                 name="guestCheckout"
@@ -702,7 +741,7 @@ export default function SettingsForm({
                 {t('form:input-label-enable-guest-checkout')}
               </Label>
             </div>
-          </div> */}
+          </div> 
 
           <div className="flex items-center gap-x-4">
             <SwitchInput
@@ -1020,8 +1059,8 @@ export default function SettingsForm({
                 switch (optionUser[0].toLowerCase()) {
                   case 'customer':
                     return `Customer: ${option.label}`;
-                  case 'vendor':
-                    return `Owner: ${option.label}`;
+                  // case 'vendor':
+                  //   return `Owner: ${option.label}`;
                   default:
                     return `Admin: ${option.label}`;
                 }
@@ -1054,8 +1093,8 @@ export default function SettingsForm({
                 switch (optionUser[0].toLowerCase()) {
                   case 'customer':
                     return `Customer: ${option.label}`;
-                  case 'vendor':
-                    return `Owner: ${option.label}`;
+                  // case 'vendor':
+                  //   return `Owner: ${option.label}`;
                   default:
                     return `Admin: ${option.label}`;
                 }
@@ -1257,6 +1296,7 @@ export default function SettingsForm({
                         isClearable={true}
                         defaultValue={item?.icon!}
                         disabled={isNotDefaultSettingsPage}
+                        disabledOptins={(arg1) => socialFields?.find(v => v.icon?.value ==  arg1?.value) ? true : false }
                       />
                     </div>
                     <Input
@@ -1287,7 +1327,7 @@ export default function SettingsForm({
             )}
           </div>
 
-          {/* {!isNotDefaultSettingsPage && (
+          {!isNotDefaultSettingsPage && socialIcon?.length != socialFields?.length  && (
             <Button
               type="button"
               onClick={() => socialAppend({ icon: '', url: '' })}
@@ -1296,7 +1336,7 @@ export default function SettingsForm({
             >
               {t('form:button-label-add-social')}
             </Button>
-          )} */}
+          )}
         </Card>
       </div>
 
