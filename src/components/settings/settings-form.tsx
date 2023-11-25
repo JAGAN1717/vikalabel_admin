@@ -38,7 +38,7 @@ import { isEmpty, split } from 'lodash';
 import omit from 'lodash/omit';
 import { useTranslation } from 'next-i18next';
 import { useRouter } from 'next/router';
-import { useCallback, useMemo, useState } from 'react';
+import { useCallback, useMemo, useState,useEffect } from 'react';
 import { Controller, useFieldArray, useForm } from 'react-hook-form';
 import Badge from '@/components/ui/badge/badge';
 import { COUNTRY_LOCALE } from '@/components/settings/country-locale';
@@ -50,6 +50,9 @@ import {
 import { EMAIL_GROUP_OPTION, SMS_GROUP_OPTION } from './eventsOption';
 import OpenAIButton from '../openAI/openAI.button';
 import { useModalAction } from '../ui/modal/modal.context';
+import { HttpClient } from '@/data/client/http-client';
+import { SelectCategory } from '../category/category-form';
+import { SelectCategory1 } from '../category/category-form';
 
 export const chatbotAutoSuggestion = ({ name }: { name: string }) => {
   return [
@@ -141,9 +144,20 @@ export const chatbotAutoSuggestion1 = ({ name }: { name: string }) => {
   ];
 };
 
+
+// type FormValues2 = {
+//   siteSubtitle: string;
+//   counter_title:string;
+// }
+
 type FormValues = {
   siteTitle: string;
   siteSubtitle: string;
+  feature_category:any;
+  feature_category1:any;
+  counter_title: string;
+  counter_icon: any;
+  counter_name: string;
   currency: any;
   currencyOptions?: SettingCurrencyOptions;
   minimumOrderAmount: number;
@@ -164,6 +178,7 @@ type FormValues = {
   signupPoints: number;
   maxShopDistance: number;
   maximumQuestionLimit: number;
+  refund_duration:number;
   currencyToWalletRatio: number;
   contactDetails: ContactDetailsInput;
   deliveryTime: {
@@ -255,6 +270,17 @@ export default function SettingsForm({
     useUpdateSettingsMutation();
   const { language, options } = settings ?? {};
   const [serverInfo, SetSeverInfo] = useState(options?.server_info);
+  const [BackgroudImg, setBackgroudImg] = useState<any>()
+
+  const [cusCat,setCusCat] = useState<any>([])
+
+  // useEffect(()=> {
+  //  HttpClient.get('featureCategoryGet').then((res:any) => {
+  //    const value = JSON.parse(res.data?.value)
+  //    // console.log("success",value)
+  //    setCusCat(value?.category)
+  //  }).catch((err)=> console.log("err",err))
+  // },[])
 
   const {
     register,
@@ -279,6 +305,7 @@ export default function SettingsForm({
           }))
           : [],
       },
+      // feature_category : cusCat[0],
       deliveryTime: options?.deliveryTime ? options?.deliveryTime : [],
       logo: options?.logo ?? '',
       useEnableGateway: options?.useEnableGateway ?? true,
@@ -336,6 +363,7 @@ export default function SettingsForm({
         : null,
     },
   });
+
   const { openModal } = useModalAction();
 
   const generateName = watch('siteTitle');
@@ -388,6 +416,41 @@ export default function SettingsForm({
   const isNotDefaultSettingsPage = Config.defaultLanguage !== locale;
 
   async function onSubmit(values: FormValues) {
+    // let imagPath = ''
+    // const url = values.counter_icon?.original;
+    // const parts = url.split('/public/'); // Split the URL by '/public/'
+    // if (parts.length === 2) {
+    //   imagPath = '/' + parts[1];
+    // } else {
+    //   console.log('URL format not as expected');
+    // }
+
+
+    // console.log("skdgjksdsdd",values.feature_category)
+
+    if(values.feature_category || values.feature_category1 ){
+      const data = {
+        category :[ values.feature_category?.slug , values.feature_category1.slug ]
+      }
+      HttpClient.post('/featureCategory', data).then(res => {
+        // console.log('success', res)
+      }).catch(err => console.log("err", err.message))
+    }
+
+    // const imagPath = `/${values.counter_icon?.id}/${values.counter_icon?.file_name}`
+    // const body = {
+    //   icon: imagPath ?? values.counter_icon?.original,
+    //   title: values.counter_title,
+    //   counter_name: values.counter_name?.value
+    // }
+
+
+    // if(values.counter_title){
+    //   HttpClient.post('/counterup-update', body).then(res => {
+    //     console.log('success', res)
+    //   }).catch(err => console.log("err", err.message))
+    // }
+
     const contactDetails = {
       ...values?.contactDetails,
       location: { ...omit(values?.contactDetails?.location, '__typename') },
@@ -398,6 +461,7 @@ export default function SettingsForm({
         }))
         : [],
     };
+     
     const smsEvent = formatEventOptions(values.smsEvent);
     const emailEvent = formatEventOptions(values.emailEvent);
     updateSettingsMutation({
@@ -536,7 +600,7 @@ export default function SettingsForm({
             disabled={isNotDefaultSettingsPage}
           />
 
-          <Input
+          {/* <Input
             label={`${t('form:input-label-maximum-question-limit')}`}
             {...register('maximumQuestionLimit')}
             type="number"
@@ -544,9 +608,19 @@ export default function SettingsForm({
             variant="outline"
             className="mb-5"
             disabled={isNotDefaultSettingsPage}
+          /> */}
+          <Input
+            label={`${t('Refund Duration')}`}
+            {...register('maximumQuestionLimit')}
+            type="number"
+            error={t(errors.maximumQuestionLimit?.message!)}
+            variant="outline"
+            className="mb-5"
+            // value={control._formValues?.maximumQuestionLimit < 0 ? 1 : control._formValues?.maximumQuestionLimit }
+            disabled={isNotDefaultSettingsPage}
           />
 
-          <div className="mb-5">
+          {/* <div className="mb-5">
             <div className="flex items-center gap-x-4">
               <SwitchInput
                 name="useOtp"
@@ -555,9 +629,9 @@ export default function SettingsForm({
               />
               <Label className="mb-0">{t('form:input-label-enable-otp')}</Label>
             </div>
-          </div>
+          </div> */}
 
-          <div className="mb-5">
+          {/* <div className="mb-5">
             <div className="flex items-center gap-x-4">
               <SwitchInput
                 name="useMustVerifyEmail"
@@ -568,7 +642,7 @@ export default function SettingsForm({
                 {t('form:input-label-use-must-verify-email')}
               </Label>
             </div>
-          </div>
+          </div> */}
 
           <div className="mb-5">
             <div className="flex items-center gap-x-4">
@@ -617,7 +691,7 @@ export default function SettingsForm({
               disabled={isNotDefaultSettingsPage}
             />
           </div>
-          <div className="mb-5">
+          {/* <div className="mb-5">
             <div className="flex items-center gap-x-4">
               <SwitchInput
                 name="guestCheckout"
@@ -628,7 +702,7 @@ export default function SettingsForm({
                 {t('form:input-label-enable-guest-checkout')}
               </Label>
             </div>
-          </div>
+          </div> */}
 
           <div className="flex items-center gap-x-4">
             <SwitchInput
@@ -760,6 +834,41 @@ export default function SettingsForm({
           )}
         </Card>
       </div>
+
+      {/* <div className="my-5 flex flex-wrap border-b border-dashed border-border-base pb-8 sm:my-8">
+        <Description
+          title="Counter List"
+          details={t('Change your Footer Counter from here')}
+          className="w-full px-0 pb-5 sm:w-4/12 sm:py-8 sm:pr-4 md:w-1/3 md:pr-5"
+        />
+
+        <Card className="w-full sm:w-8/12 md:w-2/3">
+          <div className="mb-5">
+            <FileInput name="counter_icon" control={control} multiple={false} />
+          </div>
+          <div className="mb-5">
+            <Label>{`${t('Counter Name')} *`}</Label>
+            <SelectInput
+              {...register('counter_name')}
+              control={control}
+              getOptionLabel={(option: any) => option.value}
+              options={[{ value: 'counter_1' }, { value: 'counter_2' }, { value: 'counter_3' }, { value: 'counter_4' }]}
+              disabled={isNotDefaultSettingsPage}
+            />
+          </div>
+
+          <Input
+            label={`${t('Title')} *`}
+            {...register('counter_title')}
+            type="text"
+            variant="outline"
+            placeholder={t('Title')}
+            error={t(errors.counter_title?.message!)}
+            className="mb-5"
+          />
+        </Card>
+      </div> */}
+
       <div className="my-5 flex flex-wrap border-b border-dashed border-border-base pb-8 sm:my-8">
         <Description
           title="Currency Options"
@@ -797,7 +906,7 @@ export default function SettingsForm({
                     amount: 987456321.123456789,
                     currencyCode:
                       currentCurrency?.code ?? settings?.options?.currency!,
-                      // @ts-ignore
+                    // @ts-ignore
                     locale: formation?.code! as string,
                     fractions: currentFractions,
                   })}
@@ -808,6 +917,7 @@ export default function SettingsForm({
           )}
         </Card>
       </div>
+
       <div className="my-5 flex flex-wrap border-b border-dashed border-border-base pb-8 sm:my-8">
         <Description
           title="SEO"
@@ -891,6 +1001,7 @@ export default function SettingsForm({
           />
         </Card>
       </div>
+
       <div className="my-5 flex flex-wrap border-b border-dashed border-border-base pb-8 sm:my-8">
         <Description
           title={t('form:title-sms-event-settings')}
@@ -950,11 +1061,31 @@ export default function SettingsForm({
                 }
               }}
               isCloseMenuOnSelect={false}
-              options={EMAIL_GROUP_OPTION}
+              options={EMAIL_GROUP_OPTION} npm run dev
+
               isMulti
               disabled={isNotDefaultSettingsPage}
             />
             <ValidationError message={t(errors.currency?.message)} />
+          </div>
+        </Card>
+      </div>
+
+      <div className="my-5 flex flex-wrap border-b border-dashed border-border-base pb-8 sm:my-8">
+        <Description
+          title={t('Feature Setting')}
+          details={t('Select Home Page Feature category')}
+          className="w-full px-0 pb-5 sm:w-4/12 sm:py-8 sm:pe-4 md:w-1/3 md:pe-5"
+        />
+
+        <Card className="w-full sm:w-8/12 md:w-2/3">
+          <div className="mb-5">
+            {/* <Label>{t('Featured Category')}</Label> */}
+            <SelectCategory control={control} setValue={setValue} />
+          </div>
+          <div className="mb-5">
+            {/* <Label>{t('Featured Category')}</Label> */}
+            <SelectCategory1 control={control} setValue={setValue} />
           </div>
         </Card>
       </div>
@@ -1030,8 +1161,9 @@ export default function SettingsForm({
 
       <div className="my-5 flex flex-wrap border-b border-dashed border-gray-300 pb-8 sm:my-8">
         <Description
-          title={t('form:shop-settings')}
-          details={t('form:shop-settings-helper-text')}
+          // title={t('form:shop-settings')}
+          title={t('Vikalabel Settings')}
+          details={t('Add vikalabel settings information from here')}
           className="w-full px-0 pb-5 sm:w-4/12 sm:py-8 sm:pe-4 md:w-1/3 md:pe-5"
         />
 
@@ -1059,15 +1191,17 @@ export default function SettingsForm({
             disabled={isNotDefaultSettingsPage}
           />
           <Input
-            label={t('form:input-label-website')}
+            // label={t('form:input-label-website')}
+            label={t('Mail')}
             {...register('contactDetails.website')}
             variant="outline"
+            type="email"
             className="mb-5"
             error={t(errors.contactDetails?.website?.message!)}
             disabled={isNotDefaultSettingsPage}
           />
 
-          <div className="mt-6">
+          <div className="mt-6 hidden">
             <div className="flex items-center gap-x-4">
               <SwitchInput
                 name="useGoogleMap"
@@ -1086,11 +1220,11 @@ export default function SettingsForm({
             type="number"
             error={t(errors.maxShopDistance?.message!)}
             variant="outline"
-            className="my-5"
+            className="my-5 hidden"
             disabled={isNotDefaultSettingsPage}
           />
 
-          <div className="mt-6 mb-5">
+          <div className="mt-6 mb-5 hidden">
             <div className="flex items-center gap-x-4">
               <SwitchInput
                 name="isProductReview"
@@ -1153,7 +1287,7 @@ export default function SettingsForm({
             )}
           </div>
 
-          {!isNotDefaultSettingsPage && (
+          {/* {!isNotDefaultSettingsPage && (
             <Button
               type="button"
               onClick={() => socialAppend({ icon: '', url: '' })}
@@ -1162,9 +1296,26 @@ export default function SettingsForm({
             >
               {t('form:button-label-add-social')}
             </Button>
-          )}
+          )} */}
         </Card>
       </div>
+
+      {/* 
+      <div className="my-5 flex flex-wrap border-b border-dashed border-border-base pb-8 sm:my-8">
+        <Description
+          title="Banners"
+          details={t('Add admin settings information from here')}
+          className="w-full px-0 pb-5 sm:w-4/12 sm:py-8 sm:pr-4 md:w-1/3 md:pr-5"
+        />
+        <Card className="w-full sm:w-8/12 md:w-2/3">
+        <FileInput name="NewBanner"  control={control} multiple={false}  />
+        <div className="mt-4 text-end">
+        <Button type='button'>
+          {t('Save Banners')}
+        </Button>
+        </div>
+        </Card>
+      </div> */}
 
       <div className="mb-4 text-end">
         <Button loading={loading} disabled={loading}>

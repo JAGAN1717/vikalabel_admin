@@ -92,7 +92,7 @@ const ActionButtons = ({
           {t('form:button-text-reply')}
         </button>
       )}
-      {showMakeAdminButton && (
+      {/* {showMakeAdminButton && (
         <button
           onClick={handleMakeAdmin}
           className="text-accent transition duration-200 hover:text-accent-hover focus:outline-none"
@@ -100,7 +100,7 @@ const ActionButtons = ({
         >
           <AdminIcon width={18} />
         </button>
-      )}
+      )} */}
       {showAddWalletPoints && (
         <button
           onClick={handleAddWalletPoints}

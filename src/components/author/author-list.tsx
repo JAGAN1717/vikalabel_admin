@@ -160,7 +160,7 @@ const AuthorList = ({
 
   return (
     <>
-      <div className="mb-6 overflow-hidden rounded shadow">
+      <div className="mb-6 overflow-hidden rounded ">
         <Table
           columns={columns}
           emptyText={t('table:empty-table-data')}

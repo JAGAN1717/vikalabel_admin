@@ -50,23 +50,24 @@ export default function Categories() {
   return (
     <>
       <Card className="mb-8 flex flex-col">
-        <div className="flex w-full flex-col items-center md:flex-row">
+        <div className="flex w-full flex-col  items-center md:flex-row">
           <div className="mb-4 md:mb-0 md:w-1/4">
             <h1 className="text-xl font-semibold text-heading">
               {t('form:input-label-categories')}
             </h1>
           </div>
 
-          <div className="ms-auto flex w-full flex-col items-center space-y-4 md:flex-row md:space-y-0 xl:w-3/4">
+          {/* <div className="ms-auto flex w-full flex-col items-center space-y-4 md:flex-row md:space-y-0 xl:w-3/4"> */}
+          <div className="ms-auto flex w-full flex-col items-center space-y-4 md:flex-row md:space-y-0 xl:w-2/4">
             <Search onSearch={handleSearch} />
 
-            <TypeFilter
+            {/* <TypeFilter
               className="md:ms-6"
               onTypeFilter={({ slug }: { slug: string }) => {
                 setType(slug);
                 setPage(1);
               }}
-            />
+            /> */}
 
             {locale === Config.defaultLanguage && (
               <LinkButton

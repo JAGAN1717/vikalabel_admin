@@ -15,6 +15,7 @@ import {
   useDownloadInvoiceMutation,
   useOrderQuery,
   useUpdateOrderMutation,
+  useUpdateOrderMutation2,
 } from '@/data/order';
 import { siteSettings } from '@/settings/site.settings';
 import { Attachment, OrderStatus, PaymentStatus } from '@/types';
@@ -48,6 +49,8 @@ export default function OrderDetailsPage() {
   }, [resetCart, resetCheckout]);
 
   const { mutate: updateOrder, isLoading: updating } = useUpdateOrderMutation();
+  const { mutate: updateOrders, isLoading: updatings } = useUpdateOrderMutation2();
+
   const {
     order,
     isLoading: loading,
@@ -60,7 +63,7 @@ export default function OrderDetailsPage() {
       language: locale!,
     },
     { enabled: false }
-  );
+  ); 
 
   const {
     handleSubmit,
@@ -76,6 +79,13 @@ export default function OrderDetailsPage() {
       id: order?.id as string,
       order_status: order_status?.status as string,
     });
+
+    if(order?.children[0]){
+      updateOrders({
+        id: order?.children[0]?.id as string,
+        order_status: order_status?.status as string,
+      });
+    }
   };
   const { price: subtotal } = usePrice(
     order && {
@@ -148,7 +158,7 @@ export default function OrderDetailsPage() {
             className="object-fill"
           />
         </div>
-      ),
+      ),  
     },
     {
       title: t('table:table-item-products'),

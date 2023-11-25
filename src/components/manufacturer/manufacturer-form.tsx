@@ -156,7 +156,7 @@ export default function CreateOrUpdateManufacturerForm({
     },
     { enabled: !!router.query.shop }
   );
-  const shopId = shopData?.id!;
+  const shopId = shopData?.id! ?? 3;
   const isNewTranslation = router?.query?.action === 'translate';
   const { locale } = router;
 
@@ -256,7 +256,7 @@ export default function CreateOrUpdateManufacturerForm({
         original: cover_image?.original,
         id: cover_image?.id,
       },
-      type_id: type?.id!,
+      type_id: type?.id! ?? 5,
     };
     try {
       if (

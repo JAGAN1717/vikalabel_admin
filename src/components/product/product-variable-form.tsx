@@ -105,7 +105,7 @@ export default function ProductVariableForm({
                         getOptionLabel={(option: any) => option.name}
                         getOptionValue={(option: any) => option.id}
                         options={filterAttributes(attributes, variations)!}
-                        isLoading={loading}
+                        isLoading={loading} 
                       />
                     </div>
 
@@ -228,7 +228,7 @@ export default function ProductVariableForm({
                           multiple={false}
                         />
                       </div>
-                      <div className="mt-5 mb-5">
+                      <div className="mt-5 mb-5 hidden">
                         <Checkbox
                           {...register(`variation_options.${index}.is_digital`)}
                           label={t('form:input-label-is-digital')}
@@ -258,7 +258,7 @@ export default function ProductVariableForm({
                           </div>
                         )}
                       </div>
-                      <div className="mt-5 mb-5">
+                      <div className="mt-5 mb-5 hidden">
                         <Checkbox
                           {...register(`variation_options.${index}.is_disable`)}
                           // @ts-ignore

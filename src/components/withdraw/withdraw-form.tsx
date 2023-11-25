@@ -38,7 +38,7 @@ export default function CreateOrUpdateWithdrawForm({ initialValues }: IProps) {
   const { data: shopData } = useShopQuery({
     slug: shop as string,
   });
-  const shopId = shopData?.id!;
+  const shopId = shopData?.id! ?? 3;
   const { price: shopBalance } = usePrice({
     amount: shopData?.balance?.current_balance!,
   });

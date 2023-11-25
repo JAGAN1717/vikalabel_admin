@@ -120,7 +120,7 @@ const ManufacturerList = ({
             id: record?.id,
             name: record?.name,
             is_approved: !is_approved,
-            type_id: record?.type.id,
+            type_id: record?.type.id ?? 5,
             language: locale,
           });
         }
@@ -170,7 +170,7 @@ const ManufacturerList = ({
 
   return (
     <>
-      <div className="mb-6 overflow-hidden rounded shadow">
+      <div className="mb-6 overflow-hidden rounded ">
         <Table
           columns={columns}
           emptyText={t('table:empty-table-data')}

@@ -863,3 +863,34 @@ input[type='number'].number-disable::-webkit-inner-spin-button {
   background-color: #1a3225;
   color: #fff;
 }
+
+
+/* Ajith CSS */
+
+.sidebar-margin{
+  margin-top: 0 !important;
+}
+.sidebar-padding{
+  padding-bottom: 10px;
+}
+
+.ql-toolbar.ql-snow + .ql-container.ql-snow {
+  min-height:450px
+}
+
+
+.hobbb{
+  position: relative;
+}
+.hobbb:hover .ggggfds{
+  height: 100% !important;
+}
+
+.ggggfds{
+  height: 0px !important;
+  position: absolute;
+}
+
+.InstaDD {
+  color:  red;
+}

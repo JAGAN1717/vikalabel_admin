@@ -88,6 +88,9 @@ function SelectTypes({
     // type: type?.slug,
     language: locale,
   });
+
+  // console.log("typestypes",types)
+  
   return (
     <div className="mb-5">
       <Label>{t('form:input-label-types')}</Label>
@@ -215,7 +218,7 @@ export default function CreateOrUpdateTagForm({ initialValues }: IProps) {
         id: values?.image?.id,
       },
       icon: values.icon?.value ?? '',
-      type_id: values.type?.id,
+      type_id: values.type?.id ?? 5,
     };
 
     try {
@@ -326,7 +329,7 @@ export default function CreateOrUpdateTagForm({ initialValues }: IProps) {
               isClearable={true}
             />
           </div>
-          <SelectTypes control={control} errors={errors} />
+          {/* <SelectTypes control={control} errors={errors} /> */}
         </Card>
       </div>
       <div className="mb-4 text-end">

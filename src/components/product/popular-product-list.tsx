@@ -33,28 +33,28 @@ const PopularProductList = ({ products, title }: IProps) => {
         <span className="whitespace-nowrap">{name}</span>
       ),
     },
-    {
-      title: t('table:table-item-group'),
-      dataIndex: 'type',
-      key: 'type',
-      align: 'center',
-      width: 120,
-      render: (type: any) => (
-        <span className="whitespace-nowrap">{type?.name}</span>
-      ),
-    },
+    // {
+    //   title: t('table:table-item-group'),
+    //   dataIndex: 'type',
+    //   key: 'type',
+    //   align: 'center',
+    //   width: 120,
+    //   render: (type: any) => (
+    //     <span className="whitespace-nowrap">{type?.name}</span>
+    //   ),
+    // },
 
-    {
-      title: t('table:table-item-shop'),
-      dataIndex: 'shop',
-      key: 'shop',
-      width: 120,
-      align: 'center',
-      ellipsis: true,
-      render: (shop: Shop) => (
-        <span className="truncate whitespace-nowrap">{shop?.name}</span>
-      ),
-    },
+    // {
+    //   title: t('table:table-item-shop'),
+    //   dataIndex: 'shop',
+    //   key: 'shop',
+    //   width: 120,
+    //   align: 'center',
+    //   ellipsis: true,
+    //   render: (shop: Shop) => (
+    //     <span className="truncate whitespace-nowrap">{shop?.name}</span>
+    //   ),
+    // },
 
     {
       title: t('table:table-item-unit'),
@@ -100,7 +100,7 @@ const PopularProductList = ({ products, title }: IProps) => {
   }
 
   return (
-    <div className="mb-6 overflow-hidden rounded shadow">
+    <div className="mb-6 overflow-hidden rounded ">
       <h3 className="border-b border-border-200 bg-light px-4 py-3 text-center font-semibold text-heading">
         {title}
       </h3>

@@ -7,13 +7,14 @@ import { useRouter } from 'next/router';
 const SidebarItem = ({ href, icon, label,classtext }: any) => {
   const { closeSidebar } = useUI();  
   const router = useRouter()
-  const active = router.pathname === href || router.pathname.startsWith(`${href}/`)
+  const active =  window.location.pathname === href || router.pathname.startsWith(`/${href}`)
+  // const active =  window.location.pathname === href || window.location.pathname.startsWith(`${href}`)
 
 
   return (
     <Link
       href={href}
-      className={`text-start p-3 flex w-full items-center text-base hover:text-accent ${classtext && 'lg:justify-center'} focus:text-accent ${active && 'sideBar_active'}`}
+      className={`text-start p-3 flex w-full items-center sidebar-margin text-base hover:text-accent ${classtext && 'lg:justify-center'} focus:text-accent ${active && 'sideBar_active'}`}
     >
       {getIcon({
         iconList: sidebarIcons,

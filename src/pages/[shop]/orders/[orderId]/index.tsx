@@ -47,7 +47,7 @@ export default function OrderDetailsPage() {
   const { data: shopData } = useShopQuery({
     slug: query?.shop as string,
   });
-  const shopId = shopData?.id!;
+  const shopId = shopData?.id! ?? 3;
   const { alignLeft, alignRight, isRTL } = useIsRTL();
   const { mutate: updateOrder, isLoading: updating } = useUpdateOrderMutation();
   const {

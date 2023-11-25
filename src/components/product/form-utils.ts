@@ -243,7 +243,7 @@ export function getProductInputValues(
     // language: router.locale,
     author_id: author?.id,
     manufacturer_id: manufacturer?.id,
-    type_id: type?.id,
+    type_id: type?.id ?? 5,
     product_type: product_type?.value,
     categories: categories.map((category) => category?.id),
     tags: tags.map((tag) => tag?.id),

@@ -24,7 +24,7 @@ export default function CreateAttributePage() {
   const { data: shopData } = useShopQuery({
     slug: shop as string,
   });
-  const shopId = shopData?.id!;
+  const shopId = shopData?.id! ?? 3;
 
   if (
     !hasAccess(adminOnly, permissions) &&

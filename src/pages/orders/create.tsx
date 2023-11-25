@@ -68,7 +68,7 @@ export default function ProductsPage() {
             </h1>
           </div>
 
-          <div className="ms-auto flex w-full flex-col items-center md:w-3/4">
+          <div className="ms-auto flex w-full flex-col items-center md:w-2/4">
             <Search onSearch={handleSearch} />
           </div>
 

@@ -36,6 +36,8 @@ import { useModalAction } from '../ui/modal/modal.context';
 import OpenAIButton from '../openAI/openAI.button';
 import { join, split } from 'lodash';
 import { formatSlug } from '@/utils/use-slug';
+import Checkbox from '@/components/ui/checkbox/checkbox';
+
 
 export const chatbotAutoSuggestion = ({ name }: { name: string }) => {
   return [
@@ -166,6 +168,144 @@ function SelectCategories({
   );
 }
 
+export function SelectCategory({
+  control,
+  setValue,
+}: {
+  control: Control<any>;
+  setValue: any;
+}) {
+  const { locale } = useRouter();
+  const { t } = useTranslation();
+  const type = useWatch({
+    control,
+    name: 'type',
+  });
+  const { dirtyFields } = useFormState({
+    control,
+  });
+
+  const [category,setcategory] = useState<any>(false)
+
+  // console.log("skdgsksdd",control)
+  useEffect(() => {
+    if (type?.slug && dirtyFields?.type) {
+      setValue('feature_category', []);
+    }
+  }, [type?.slug]);
+  const { categories, loading } = useCategoriesQuery({
+    limit: 999,
+    type: type?.slug,
+    language: locale,
+  });
+
+  // useEffect(()=>{
+  //   // if(control?._formValues?.feature_category?.length > 2){
+  //   //   setcategory([])
+  //   // }else 
+    
+  //   if (control?._formValues?.feature_category?.length < 2) {
+  //     setcategory(categories)
+  //    }else{
+  //     setcategory([])
+  //   }
+
+  //   // if(control?._formValues?.feature_category?.length === 0 ){
+  //   //   setcategory(categories)
+  //   // }
+  // },[control?._formValues?.feature_category?.length])
+  
+  //  useEffect(()=> {
+  //   setcategory(categories)
+  //  },[])
+
+  return (
+    <div>
+      <Label>{t('Featured Category 1')}</Label>
+      <SelectInput
+        name="feature_category"
+        control={control}
+        getOptionLabel={(option: any) => option.name}
+        getOptionValue={(option: any) => option.id}
+        options={categories}
+        isClearable={true}
+        isLoading={loading}
+        // isMulti
+        // disabled={}
+      /> 
+    </div>
+  );
+}
+
+export function SelectCategory1({
+  control,
+  setValue,
+}: {
+  control: Control<any>;
+  setValue: any;
+}) {
+  const { locale } = useRouter();
+  const { t } = useTranslation();
+  const type = useWatch({
+    control,
+    name: 'type',
+  });
+  const { dirtyFields } = useFormState({
+    control,
+  });
+
+  const [category,setcategory] = useState<any>([])
+
+  // console.log("skdgsksdd",control)
+  useEffect(() => {
+    if (type?.slug && dirtyFields?.type) {
+      setValue('feature_category1', []);
+    }
+  }, [type?.slug]);
+  const { categories, loading } = useCategoriesQuery({
+    limit: 999,
+    type: type?.slug,
+    language: locale,
+  });
+
+  // useEffect(()=>{
+  //   // if(control?._formValues?.feature_category?.length > 2){
+  //   //   setcategory([])
+  //   // }else 
+    
+  //   if (control?._formValues?.feature_category?.length < 2) {
+  //     setcategory(categories)
+  //    }else{
+  //     setcategory([])
+  //   }
+
+  //   // if(control?._formValues?.feature_category?.length === 0 ){
+  //   //   setcategory(categories)
+  //   // }
+  // },[control?._formValues?.feature_category?.length])
+  
+  //  useEffect(()=> {
+  //   setcategory(categories)
+  //  },[])
+
+  return (
+    <div>
+      <Label>{t('Featured Category 2')}</Label>
+      <SelectInput
+        name="feature_category1"
+        control={control}
+        getOptionLabel={(option: any) => option.name}
+        getOptionValue={(option: any) => option.id}
+        options={categories}
+        isClearable={true}
+        isLoading={loading}
+        // isMulti
+        // disabled={}
+      /> 
+    </div>
+  );
+}
+
 type FormValues = {
   name: string;
   slug: string;
@@ -174,6 +314,9 @@ type FormValues = {
   image: any;
   icon: any;
   type: any;
+  show_in_home_page:any;
+  order:any;
+  banners:any;
 };
 
 const defaultValues = {
@@ -196,6 +339,7 @@ export default function CreateOrUpdateCategoriesForm({
   const { t } = useTranslation();
 
   const [isSlugDisable, setIsSlugDisable] = useState<boolean>(true);
+  const [isbanners, setIsbanners] = useState<boolean>(false);
 
   const isNewTranslation = router?.query?.action === 'translate';
   const isSlugEditable =
@@ -251,7 +395,8 @@ export default function CreateOrUpdateCategoriesForm({
       key: 'details',
       suggestion: autoSuggestionList as ItemProps[],
     });
-  }, [generateName]);
+  }, [generateName]); 
+
 
   const { mutate: createCategory, isLoading: creating } =
     useCreateCategoryMutation();
@@ -264,6 +409,8 @@ export default function CreateOrUpdateCategoriesForm({
       name: values.name,
       slug: values.slug,
       details: values.details,
+      show_in_home_page:values.show_in_home_page ? 1 : 0,
+      order:values.order,
       image: {
         thumbnail: values?.image?.thumbnail,
         original: values?.image?.original,
@@ -271,7 +418,12 @@ export default function CreateOrUpdateCategoriesForm({
       },
       icon: values.icon?.value || '',
       parent: values.parent?.id ?? null,
-      type_id: values.type?.id,
+      type_id: values.type?.id ?? 5,
+      banners : {
+        thumbnail: values?.banners?.thumbnail,
+        original: values?.banners?.original,
+        id: values?.banners?.id,
+      },
     };
     if (
       !initialValues ||
@@ -288,6 +440,14 @@ export default function CreateOrUpdateCategoriesForm({
       });
     }
   };
+
+
+  useEffect(()=> {
+    setIsbanners(control?._formValues?.show_in_home_page ?? false)
+  },[control])
+
+
+  console.log('controlcontrol',control)
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
@@ -376,8 +536,33 @@ export default function CreateOrUpdateCategoriesForm({
               isClearable={true}
             />
           </div>
-          <SelectTypes control={control} errors={errors} />
+          {/* <SelectTypes control={control} errors={errors} /> */}
+          <div className="mb-5">
           <SelectCategories control={control} setValue={setValue} />
+          </div>
+          <div className="mb-5">
+           <Input
+              label={`${t('Show Order')}`}
+              {...register('order')}
+              // value={slugAutoSuggest}
+              variant="outline"
+              error={t(errors.order?.message!)}
+              className="mb-5"
+              type='number'
+            />
+            <Checkbox
+              {...register('show_in_home_page')}
+              error={t(errors.show_in_home_page?.message!)}
+              label={t('Show in Luxe')}
+              className="mb-5"
+              handleChange={()=>{ setIsbanners((e)=> !e)}}
+          />
+          </div>
+
+          {
+            isbanners ?
+            <FileInput name="banners" control={control} multiple={false} /> : ''
+          }
         </Card>
       </div>
       <div className="mb-4 text-end">

@@ -28,6 +28,7 @@ export default function Uploader({
 }: any) {
   const { t } = useTranslation();
   const [files, setFiles] = useState<Attachment[]>(getPreviewImage(value));
+  localStorage.setItem('fileLen',value?.length ?? 0)
   const { mutate: upload, isLoading: loading } = useUploadMutation();
   const [error, setError] = useState<string | null>(null);
   const { getRootProps, getInputProps } = useDropzone({
@@ -94,6 +95,8 @@ export default function Uploader({
       onChange(images);
     }
   };
+
+
   const thumbs = files?.map((file: any, idx) => {
     const imgTypes = [
       'tif',
@@ -115,7 +118,9 @@ export default function Uploader({
         : file?.thumbnail?.split('.');
       const fileType = splitArray?.pop(); // it will pop the last item from the fileSplitName arr which is the file ext
       const filename = splitArray?.join('.'); // it will join the array with dot, which restore the original filename
+      const filename2 = file?.file_name; // it will join the array with dot, which restore the original filename
       const isImage = file?.thumbnail && imgTypes.includes(fileType); // check if the original filename has the img ext
+
 
       // Old Code *******
 
@@ -145,11 +150,12 @@ export default function Uploader({
             <figure className="relative h-16 w-28">
               <Image
                 src={file.thumbnail}
-                alt={filename}
+                alt={filename2}
                 fill
                 sizes="(max-width: 768px) 100vw"
                 className="object-contain"
               />
+              {/* <img src={file.thumbnail} alt={filename2} className="object-contain w-full" /> */}
             </figure>
           ) : (
             <div className="flex flex-col items-center">

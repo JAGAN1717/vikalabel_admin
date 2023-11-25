@@ -47,7 +47,7 @@ export default function Orders() {
       enabled: !!shop,
     }
   );
-  const shopId = shopData?.id!;
+  const shopId = shopData?.id! ?? 3;
   const { orders, loading, paginatorInfo, error } = useOrdersQuery({
     language: locale,
     limit: 20,
@@ -56,7 +56,8 @@ export default function Orders() {
   });
   const { refetch } = useExportOrderQuery(
     {
-      ...(shopId && { shop_id: shopId }),
+      // ...(shopId && { shop_id: shopId }),
+      ...(shopId && { shop_id: '' }),
     },
     { enabled: false }
   );
@@ -69,7 +70,7 @@ export default function Orders() {
   async function handleExportOrder() {
     const { data } = await refetch();
 
-    if (data) {
+  if (data) {
       const a = document.createElement('a');
       a.href = data;
       a.setAttribute('download', 'export-order');

@@ -96,7 +96,7 @@ const TypeList = ({ types, onSort, onOrder }: IProps) => {
         <LanguageSwitcher
           slug={slug}
           record={record}
-          deleteModalView="DELETE_TYPE"
+          // deleteModalView="DELETE_TYPE"
           routes={Routes?.type}
         />
       ),

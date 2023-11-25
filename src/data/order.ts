@@ -118,6 +118,20 @@ export const useUpdateOrderMutation = () => {
   });
 };
 
+export const useUpdateOrderMutation2 = () => {
+  const { t } = useTranslation();
+  const queryClient = useQueryClient();
+  return useMutation(orderClient.update, {
+    onSuccess: () => {
+      // toast.success(t('common:successfully-updated'));
+    },
+    // Always refetch after error or success:
+    onSettled: () => {
+      queryClient.invalidateQueries(API_ENDPOINTS.ORDERS);
+    },
+  });
+};
+
 export const useDownloadInvoiceMutation = (
   { order_id, isRTL, language }: { order_id: string, isRTL: boolean, language: string },
   options: any = {}

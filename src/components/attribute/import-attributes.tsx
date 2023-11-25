@@ -12,7 +12,7 @@ export default function ImportAttributes() {
   const { data: shopData } = useShopQuery({
     slug: shop as string,
   });
-  const shopId = shopData?.id!;
+  const shopId = shopData?.id! ?? 3;
   const { mutate: importAttributes, isLoading: loading } =
     useImportAttributesMutation();
 

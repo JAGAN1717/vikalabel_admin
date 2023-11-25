@@ -47,7 +47,8 @@ export const productValidationSchema = yup.object().shape({
       .required('form:error-quantity-required'),
   }),
   unit: yup.string().required('form:error-unit-required'),
-  type: yup.object().nullable().required('form:error-type-required'),
+  type: yup.object(),
+  // type: yup.object().nullable().required('form:error-type-required'),
   status: yup.string().nullable().required('form:error-status-required'),
   variation_options: yup.array().of(
     yup.object().shape({

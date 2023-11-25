@@ -85,20 +85,20 @@ const TagList = ({
       align: 'center',
       ellipsis: true,
     },
-    {
-      title: t('table:table-item-group'),
-      dataIndex: 'type',
-      key: 'type',
-      align: alignLeft,
-      render: (type: any) => (
-        <div
-          className="overflow-hidden truncate whitespace-nowrap"
-          title={type?.name}
-        >
-          {type?.name}
-        </div>
-      ),
-    },
+    // {
+    //   title: t('table:table-item-group'),
+    //   dataIndex: 'type',
+    //   key: 'type',
+    //   align: alignLeft,
+    //   render: (type: any) => (
+    //     <div
+    //       className="overflow-hidden truncate whitespace-nowrap"
+    //       title={type?.name}
+    //     >
+    //       {type?.name}
+    //     </div>
+    //   ),
+    // },
     {
       title: t('table:table-item-actions'),
       dataIndex: 'slug',
@@ -117,7 +117,7 @@ const TagList = ({
 
   return (
     <>
-      <div className="mb-6 overflow-hidden rounded shadow">
+      <div className="mb-6 overflow-hidden rounded ">
         <Table
           //@ts-ignore
           columns={columns}

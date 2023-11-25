@@ -74,7 +74,8 @@ export default function useLocation({ onChange, onChangeCurrentLocation, setInpu
   const [autocomplete, setAutocomplete] = useState<any>(null);
   const { isLoaded, loadError } = useJsApiLoader({
     id: 'google_map_autocomplete',
-    googleMapsApiKey: process.env.NEXT_PUBLIC_GOOGLE_MAP_API_KEY!,
+    // googleMapsApiKey: process.env.NEXT_PUBLIC_GOOGLE_MAP_API_KEY!,
+    googleMapsApiKey: 'AIzaSyCOYU6x7yqbUnNRtBuygEfCX9NgWakZRLw',
     libraries,
   });
 

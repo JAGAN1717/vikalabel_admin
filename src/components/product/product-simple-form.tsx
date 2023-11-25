@@ -82,7 +82,7 @@ export default function ProductSimpleForm({ initialValues }: IProps) {
           disabled={isTranslateProduct}
         />
 
-        <Input
+        {/* <Input
           label={t('form:input-label-width')}
           {...register('width')}
           error={t(errors.width?.message!)}
@@ -102,8 +102,8 @@ export default function ProductSimpleForm({ initialValues }: IProps) {
           error={t(errors.length?.message!)}
           variant="outline"
           className="mb-5"
-        />
-        <Checkbox
+        /> */}
+        {/* <Checkbox
           {...register('is_digital')}
           id="is_digital"
           label={t('form:input-label-is-digital')}
@@ -117,9 +117,9 @@ export default function ProductSimpleForm({ initialValues }: IProps) {
           label={t('form:input-label-is-external')}
           disabled={Boolean(is_digital)}
           className="mb-5"
-        />
+        /> */}
 
-        {is_digital ? (
+        {/* {is_digital ? (
           <>
             <Label>{t('form:input-label-digital-file')}</Label>
             <FileInput
@@ -154,7 +154,7 @@ export default function ProductSimpleForm({ initialValues }: IProps) {
               className="mb-5"
             />
           </div>
-        ) : null}
+        ) : null} */}
       </Card>
     </div>
   );

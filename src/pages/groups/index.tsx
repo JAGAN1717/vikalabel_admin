@@ -48,7 +48,7 @@ export default function TypesPage() {
         <div className="flex w-full flex-col items-center space-y-4 ms-auto md:flex-row md:space-y-0 xl:w-1/2">
           <Search onSearch={handleSearch} />
 
-          {locale === Config.defaultLanguage && (
+          {/* {locale === Config.defaultLanguage && (
             <LinkButton
               href={Routes.type.create}
               className="h-12 w-full md:w-auto md:ms-6"
@@ -60,7 +60,7 @@ export default function TypesPage() {
                 + {t('form:button-label-add')}
               </span>
             </LinkButton>
-          )}
+          )} */}
         </div>
       </Card>
       <TypeList types={types} onOrder={setOrder} onSort={setColumn} />

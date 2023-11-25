@@ -21,7 +21,7 @@ import { useShopQuery } from '@/data/shop';
 import ProductTagInput from './product-tag-input';
 import { Config } from '@/config';
 import Alert from '@/components/ui/alert';
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import ProductAuthorInput from './product-author-input';
 import ProductManufacturerInput from './product-manufacturer-input';
 import { EditIcon } from '@/components/icons/edit';
@@ -130,7 +130,7 @@ export default function CreateOrUpdateProductForm({
       enabled: !!router.query.shop,
     }
   );
-  const shopId = shopData?.id!;
+  const shopId = shopData?.id! ?? 3;
   const isNewTranslation = router?.query?.action === 'translate';
   const isSlugEditable =
     router?.query?.action === 'edit' &&
@@ -141,6 +141,7 @@ export default function CreateOrUpdateProductForm({
     // @ts-ignore
     defaultValues: getProductDefaultValues(initialValues!, isNewTranslation),
   });
+
   const {
     register,
     handleSubmit,
@@ -152,7 +153,27 @@ export default function CreateOrUpdateProductForm({
   } = methods;
 
   const upload_max_filesize = options?.server_info?.upload_max_filesize / 1024;
+  const allEmpty = control?._formValues?.variations?.every((item:any) => item.value.length === 0 )
+  const [getBtn,setbtn]=useState<any>(true)
+   useEffect(()=> {
+    setbtn(allEmpty === undefined ? true :  allEmpty)
+  },[allEmpty])
+  
+  // console.log("controlcontrol",allEmpty)
+  // useEffect(()=> {
+  //   let data = ''
+  //   if(control?._formValues?.variations?.length > 0){
+  //     control?._formValues?.variations?.map(v => {
+  //       data = v.value?.length
+  //     })
+  //   }
+  //   console.log("controlcontrol",data)
+  // },[control?._formValues?.variations])
 
+  // const allEmpty = control?._formValues?.variations?.every((item:any) => item.value.length === 0 && item.attribute === '') 
+
+  // const checkCon =  allEmpty == 'undefined' ? true :  allEmpty
+  
   const { mutate: createProduct, isLoading: creating } =
     useCreateProductMutation();
   const { mutate: updateProduct, isLoading: updating } =
@@ -200,6 +221,7 @@ export default function CreateOrUpdateProductForm({
     control,
     name: 'video',
   });
+  
   const productName = watch('name');
 
   const autoSuggestionList = useMemo(() => {
@@ -407,15 +429,15 @@ export default function CreateOrUpdateProductForm({
               details={t('form:type-and-category-help-text')}
               className="w-full px-0 pb-5 sm:w-4/12 sm:py-8 sm:pe-4 md:w-1/3 md:pe-5"
             />
-
+  
             <Card className="w-full sm:w-8/12 md:w-2/3">
-              <ProductGroupInput
+              {/* <ProductGroupInput
                 control={control}
                 error={t((errors?.type as any)?.message)}
-              />
+              /> */}
               <ProductCategoryInput control={control} setValue={setValue} />
               {/* <ProductAuthorInput control={control} /> */}
-              <ProductManufacturerInput control={control} setValue={setValue} />
+              {/* <ProductManufacturerInput control={control} setValue={setValue} /> */}
               <ProductTagInput control={control} setValue={setValue} />
             </Card>
           </div>
@@ -555,7 +577,7 @@ export default function CreateOrUpdateProductForm({
                 {t('form:button-label-back')}
               </Button>
             )}
-            <Button loading={updating || creating}>
+            <Button loading={updating || creating} disabled={product_type?.value === ProductType.Variable ? getBtn : false} > 
               {initialValues
                 ? t('form:button-label-update-product')
                 : t('form:button-label-add-product')}

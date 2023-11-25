@@ -22,7 +22,10 @@ const Loader = (props: Props) => {
           )}
           style={{ height: 'calc(100vh - 200px)' }}
         >
-          <div className={styles.loading} />
+          {/* <div className={styles.loading} /> */}
+          <div className=''>
+            <img src='/icons/340.gif' className=''  alt='loading' />
+          </div>
 
           {showText && (
             <h3 className="text-lg font-semibold text-body italic">{text}</h3>

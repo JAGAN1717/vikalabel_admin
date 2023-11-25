@@ -24,7 +24,7 @@ export default function UpdateTypePage() {
   if (error) return <ErrorMessage message={error.message} />;
   return (
     <>
-      <div className="flex border-b border-dashed border-border-base py-5 sm:py-8">
+      <div className="flex border-b border-dashed border-border-base py-5">
         <h1 className="text-lg font-semibold text-heading">
           {t('form:form-title-edit-type')}
         </h1>

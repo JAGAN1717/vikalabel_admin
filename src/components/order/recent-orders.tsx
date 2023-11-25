@@ -81,7 +81,8 @@ const RecentOrders = ({ orders, title }: IProps) => {
           scroll={{ x: 200 }}
           expandable={{
             expandedRowRender: () => '',
-            rowExpandable: rowExpandable,
+            // rowExpandable: rowExpandable,
+            rowExpandable: ()=> false,
           }}
         />
       </div>

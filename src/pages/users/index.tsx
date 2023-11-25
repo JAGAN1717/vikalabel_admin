@@ -50,7 +50,7 @@ export default function Customers() {
           </h1>
         </div>
 
-        <div className="ms-auto sm:flex w-full  items-center md:w-3/4">
+        <div className="ms-auto sm:flex w-full  items-center lg:w-2/4">
           <Search onSearch={handleSearch} />
           <LinkButton
             href={`${Routes.user.create}`}

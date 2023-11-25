@@ -29,7 +29,8 @@ const CategoryList = ({
   onOrder,
 }: IProps) => {
   const { t } = useTranslation();
-  const rowExpandable = (record: any) => record.children?.length;
+  // const rowExpandable = (record: any) => record.children?.length;
+  const rowExpandable = (record: any) => false;
   const { alignLeft, alignRight } = useIsRTL();
 
   const [sortingObj, setSortingObj] = useState<{
@@ -40,6 +41,7 @@ const CategoryList = ({
     column: null,
   });
 
+  // console.log("sdjkdsgdshdsd",categories)
   const onHeaderClick = (column: string | null) => ({
     onClick: () => {
       onSort((currentSortDirection: SortOrder) =>
@@ -80,13 +82,32 @@ const CategoryList = ({
       width: 150,
       onHeaderCell: () => onHeaderClick('name'),
     },
+    // {
+    //   title: t('table:table-item-details'),
+    //   dataIndex: 'details',
+    //   key: 'details',
+    //   ellipsis: true,
+    //   align: alignLeft,
+    //   width: 200,
+    // },
     {
-      title: t('table:table-item-details'),
-      dataIndex: 'details',
-      key: 'details',
+      title: t('Parent'),
+      dataIndex: 'parent',
+      key: 'parent',
       ellipsis: true,
       align: alignLeft,
       width: 200,
+      render: (parent: any) => {
+        if (!parent?.name) return null;
+        return (
+        <div
+        className="overflow-hidden truncate whitespace-nowrap"
+        title={parent?.name}
+      >
+        {parent?.name}
+      </div>
+        )
+      }
     },
     {
       title: t('table:table-item-image'),
@@ -111,24 +132,42 @@ const CategoryList = ({
         );
       },
     },
+    // {
+    //   title: t('table:table-item-icon'),
+    //   dataIndex: 'icon',
+    //   key: 'icon',
+    //   align: 'center',
+    //   width: 120,
+    //   render: (icon: string) => {
+    //     if (!icon) return null;
+    //     return (
+    //       <span className="flex items-center justify-center">
+    //         {getIcon({
+    //           iconList: categoriesIcon,
+    //           iconName: icon,
+    //           className: 'w-5 h-5 max-h-full max-w-full',
+    //         })}
+    //       </span>
+    //     );
+    //   },
+    // },
     {
-      title: t('table:table-item-icon'),
-      dataIndex: 'icon',
-      key: 'icon',
+      title: t('Sort by order'),
+      dataIndex: 'order',
+      key: 'order',
       align: 'center',
       width: 120,
-      render: (icon: string) => {
-        if (!icon) return null;
+      render: (parent: any) => {
+        if (!parent) return null;
         return (
-          <span className="flex items-center justify-center">
-            {getIcon({
-              iconList: categoriesIcon,
-              iconName: icon,
-              className: 'w-5 h-5 max-h-full max-w-full',
-            })}
-          </span>
-        );
-      },
+        <div
+        className="overflow-hidden truncate whitespace-nowrap"
+        title={parent}
+      >
+        {parent}
+      </div>
+        )
+      }
     },
     {
       title: t('table:table-item-slug'),
@@ -146,21 +185,21 @@ const CategoryList = ({
         </div>
       ),
     },
-    {
-      title: t('table:table-item-group'),
-      dataIndex: 'type',
-      key: 'type',
-      align: 'center',
-      width: 120,
-      render: (type: any) => (
-        <div
-          className="overflow-hidden truncate whitespace-nowrap"
-          title={type?.name}
-        >
-          {type?.name}
-        </div>
-      ),
-    },
+    // {
+    //   title: t('table:table-item-group'),
+    //   dataIndex: 'type',
+    //   key: 'type',
+    //   align: 'center',
+    //   width: 120,
+    //   render: (type: any) => (
+    //     <div
+    //       className="overflow-hidden truncate whitespace-nowrap"
+    //       title={type?.name}
+    //     >
+    //       {type?.name}
+    //     </div>
+    //   ),
+    // },
     {
       title: t('table:table-item-actions'),
       dataIndex: 'slug',
@@ -180,7 +219,7 @@ const CategoryList = ({
 
   return (
     <>
-      <div className="mb-6 overflow-hidden rounded shadow">
+      <div className="mb-6 overflow-hidden rounded ">
         <Table
           //@ts-ignore
           columns={columns}

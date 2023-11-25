@@ -68,7 +68,7 @@ export default function Dashboard() {
   }
   return (
     <>
-      <div className="mb-6 grid w-full grid-cols-1 gap-5 sm:grid-cols-2 xl:grid-cols-4">
+      <div className="mb-6 grid w-full grid-cols-1 gap-5 sm:grid-cols-2 xl:grid-cols-3">
         <div className="w-full ">
           <StickerCard
             titleTransKey="sticker-card-title-rev"
@@ -93,14 +93,14 @@ export default function Dashboard() {
             price={todays_revenue}
           />
         </div>
-        <div className="w-full ">
+        {/* <div className="w-full ">
           <StickerCard
             titleTransKey="sticker-card-title-total-shops"
             icon={<ShopIcon className="w-6" color="#1D4ED8" />}
             iconBgStyle={{ backgroundColor: '#93C5FD' }}
             price={data?.totalShops}
           />
-        </div>
+        </div> */}
       </div>
 
       <div className="mb-6 flex w-full flex-wrap md:flex-nowrap">
@@ -127,19 +127,19 @@ export default function Dashboard() {
       </div>
 
       <div className="mb-6 flex w-full flex-wrap space-y-6 rtl:space-x-reverse xl:flex-nowrap xl:space-y-0 xl:space-x-5">
-        <div className="w-full xl:w-1/2">
+        <div className="w-full ">
           <RecentOrders
             orders={orderData}
             title={t('table:recent-order-table-title')}
           />
         </div>
 
-        <div className="w-full xl:w-1/2">
+        {/* <div className="w-full xl:w-1/2">
           <WithdrawTable
             withdraws={withdraws}
             title={t('table:withdraw-table-title')}
           />
-        </div>
+        </div> */}
       </div>
       <div className="mb-6 w-full xl:mb-0">
         <PopularProductList
