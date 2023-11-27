@@ -647,7 +647,6 @@ export default function SettingsForm({
             disabled={isNotDefaultSettingsPage}
           />
 
-
           <Input
             label={`${t('Delivery Duration')}`}
             {...register('working_days')}

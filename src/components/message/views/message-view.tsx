@@ -21,7 +21,7 @@ import {
   autoUpdate,
   useFloating,
   shift,
-} from '@floating-ui/react-dom-interactions';
+} from '@floating-ui/react';
 import { ArrowDown } from '@/components/icons/arrow-down';
 import { useMeQuery } from '@/data/user';
 import { adminOnly, getAuthCredentials, hasAccess } from '@/utils/auth-utils';

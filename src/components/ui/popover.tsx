@@ -9,7 +9,8 @@ import {
   autoUpdate,
   useFloating,
   shift,
-} from '@floating-ui/react-dom-interactions';
+} from '@floating-ui/react';
+// } from '@floating-ui/react-dom-interactions';
 
 interface PopOverProps {
   children: any;
@@ -17,6 +18,9 @@ interface PopOverProps {
   popOverPanelClass?: string;
   iconStyle?: 'vertical' | 'horizontal';
 }
+
+
+
 
 const PopOver = ({
   children,

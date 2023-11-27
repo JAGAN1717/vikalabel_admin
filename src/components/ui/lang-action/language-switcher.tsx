@@ -10,7 +10,7 @@ import {
   autoUpdate,
   useFloating,
   shift,
-} from '@floating-ui/react-dom-interactions';
+} from '@floating-ui/react';
 import ActionButtons from '@/components/common/action-buttons';
 import LanguageListbox from './lang-list-box';
 import { Config } from '@/config';

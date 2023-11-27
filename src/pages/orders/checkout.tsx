@@ -58,6 +58,7 @@ export default function CheckoutPage() {
           <ContactGrid
             className="shadow-700 bg-light p-5 md:p-8"
             //@ts-ignore
+           
             contact={user?.profile?.contact}
             label={t('text-contact-number')}
             count={1}
